@@ -1,0 +1,6439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ABISMO-14 — Ecosistema Digital</title>
+
+    
+<style>
+/* CSS integrado desde styles.css */
+/* ============================================================
+   ABISMO-14 — ESTILOS GENERALES
+============================================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --sky: #42c8ff;
+    --cyan: #20f4e4;
+    --deep: #001d3d;
+    --ocean: #003b68;
+    --petrol: #001923;
+    --coral: #ff637d;
+    --violet: #a86cff;
+    --green: #52ef9d;
+    --white: #f5fbff;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+    background: #001c35;
+    color: white;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.screen {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ============================================================
+   MAPA
+============================================================ */
+
+#mapScreen {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(73, 225, 255, .5),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #58d5ff 0%,
+            #087ebd 38%,
+            #003c69 72%,
+            #001626 100%
+        );
+}
+
+.map-background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.wave {
+    position: absolute;
+    width: 150%;
+    height: 250px;
+    left: -25%;
+    border-radius: 50%;
+    opacity: .13;
+    border-top: 3px solid white;
+    animation: waveMove 10s linear infinite;
+}
+
+.wave-1 {
+    top: 10%;
+}
+
+.wave-2 {
+    top: 30%;
+    animation-duration: 14s;
+    animation-delay: -4s;
+}
+
+.wave-3 {
+    top: 60%;
+    animation-duration: 18s;
+    animation-delay: -7s;
+}
+
+@keyframes waveMove {
+    from {
+        transform: translateX(-8%) rotate(-2deg);
+    }
+
+    50% {
+        transform: translateX(8%) rotate(2deg);
+    }
+
+    to {
+        transform: translateX(-8%) rotate(-2deg);
+    }
+}
+
+.decor-fish {
+    position: absolute;
+    font-size: clamp(30px, 4vw, 70px);
+    opacity: .65;
+    filter: drop-shadow(0 10px 12px rgba(0, 0, 0, .3));
+    animation: decorativeFish 10s ease-in-out infinite;
+}
+
+.fish-a {
+    left: 4%;
+    top: 35%;
+}
+
+.fish-b {
+    right: 4%;
+    top: 25%;
+    animation-delay: -3s;
+}
+
+.fish-c {
+    right: 13%;
+    bottom: 10%;
+    animation-delay: -6s;
+}
+
+@keyframes decorativeFish {
+    0%,100% {
+        transform: translate(0, 0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translate(40px, -20px) rotate(5deg);
+    }
+}
+
+.decor-bubble {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255,255,255,.6);
+    border-radius: 50%;
+    animation: bubbleFloat 7s linear infinite;
+}
+
+.bubble-a {
+    left: 20%;
+    bottom: -20px;
+}
+
+.bubble-b {
+    left: 70%;
+    bottom: -50px;
+    width: 24px;
+    height: 24px;
+    animation-delay: -3s;
+}
+
+.bubble-c {
+    left: 85%;
+    bottom: -20px;
+    animation-delay: -1s;
+}
+
+.bubble-d {
+    left: 45%;
+    bottom: -40px;
+    width: 9px;
+    height: 9px;
+    animation-delay: -5s;
+}
+
+@keyframes bubbleFloat {
+    to {
+        transform: translateY(-110vh) translateX(30px);
+        opacity: 0;
+    }
+}
+
+.map-header {
+    position: relative;
+    z-index: 5;
+
+    width: min(1500px, 94%);
+    margin: 0 auto;
+    padding: 30px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-name {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.project-number {
+    width: 60px;
+    height: 60px;
+
+    display: grid;
+    place-items: center;
+
+    border: 2px solid rgba(255,255,255,.6);
+    border-radius: 50%;
+
+    font-size: 26px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 25px rgba(100,240,255,.6);
+}
+
+.project-name h1 {
+    font-size: clamp(25px, 3vw, 42px);
+    letter-spacing: .12em;
+}
+
+.project-name p {
+    font-size: 12px;
+    letter-spacing: .4em;
+    opacity: .8;
+}
+
+.ods-label {
+    padding: 12px 20px;
+
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+
+    background: rgba(0,20,50,.22);
+    backdrop-filter: blur(10px);
+
+    font-weight: 900;
+}
+
+.ods-label span {
+    margin-left: 10px;
+    opacity: .75;
+    font-size: 11px;
+    letter-spacing: .15em;
+}
+
+
+/* ============================================================
+   CONTENIDO DEL MAPA
+============================================================ */
+
+.map-content {
+    position: relative;
+    z-index: 3;
+
+    width: min(1500px, 94%);
+    margin: auto;
+
+    padding-bottom: 80px;
+}
+
+.map-title {
+    max-width: 800px;
+    margin: 10px auto 35px;
+    text-align: center;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .3em;
+    opacity: .75;
+}
+
+.map-title h2 {
+    margin-top: 10px;
+
+    font-size: clamp(55px, 9vw, 125px);
+    line-height: .8;
+    letter-spacing: -.06em;
+
+    text-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+}
+
+.map-title h2 span {
+    color: #baffff;
+}
+
+.map-title p {
+    margin: 25px auto 0;
+    max-width: 650px;
+
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   MAPA CENTRAL
+============================================================ */
+
+.ocean-map {
+    position: relative;
+
+    width: min(1050px, 100%);
+    min-height: 610px;
+
+    margin: auto;
+}
+
+.map-core {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 310px;
+    height: 310px;
+
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    text-align: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #42f5ff,
+            #006fbd 45%,
+            #002a53 80%
+        );
+
+    border: 3px solid rgba(255,255,255,.65);
+
+    box-shadow:
+        0 0 50px rgba(38,232,255,.65),
+        inset 0 0 40px rgba(255,255,255,.15);
+
+    overflow: hidden;
+}
+
+.core-glow {
+    position: absolute;
+    inset: -30%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.35),
+            transparent 45%
+        );
+    animation: corePulse 4s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+    0%,100% {
+        transform: scale(.8);
+        opacity: .4;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: .8;
+    }
+}
+
+.core-icon {
+    position: relative;
+    z-index: 2;
+    font-size: 55px;
+}
+
+.map-core h3 {
+    position: relative;
+    z-index: 2;
+    font-size: 28px;
+    letter-spacing: .1em;
+}
+
+.map-core p {
+    position: relative;
+    z-index: 2;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.map-orbit {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border: 1px solid rgba(151,255,255,.35);
+    border-radius: 50%;
+
+    animation: orbitSpin 30s linear infinite;
+}
+
+.orbit-1 {
+    width: 430px;
+    height: 430px;
+}
+
+.orbit-2 {
+    width: 650px;
+    height: 650px;
+    animation-duration: 45s;
+}
+
+.orbit-3 {
+    width: 900px;
+    height: 900px;
+    animation-duration: 60s;
+}
+
+@keyframes orbitSpin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+/* ============================================================
+   NODOS
+============================================================ */
+
+.info-node {
+    position: absolute;
+
+    width: 300px;
+    padding: 20px;
+
+    display: flex;
+    gap: 15px;
+
+    background: rgba(0,30,60,.6);
+    border: 1px solid rgba(140,240,255,.45);
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.25);
+
+    transition: .3s ease;
+}
+
+.info-node:hover {
+    transform: scale(1.04);
+    border-color: white;
+    box-shadow:
+        0 0 35px rgba(75,240,255,.45);
+}
+
+.info-node h3 {
+    font-size: 13px;
+    letter-spacing: .08em;
+    margin-bottom: 7px;
+}
+
+.info-node p {
+    font-size: 12px;
+    line-height: 1.45;
+    opacity: .85;
+}
+
+.node-icon {
+    flex-shrink: 0;
+
+    width: 45px;
+    height: 45px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,.15);
+
+    font-size: 23px;
+}
+
+.node-climate {
+    top: 5%;
+    left: 0;
+}
+
+.node-economy {
+    top: 5%;
+    right: 0;
+}
+
+.node-biodiversity {
+    bottom: 5%;
+    left: 0;
+}
+
+.node-purpose {
+    bottom: 5%;
+    right: 0;
+}
+
+
+/* ============================================================
+   CONSECUENCIAS
+============================================================ */
+
+.consequences {
+    margin-top: 25px;
+}
+
+.consequence-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    margin-bottom: 18px;
+}
+
+.consequence-title span {
+    color: #ffb4b4;
+    font-size: 25px;
+}
+
+.consequence-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.consequence-card {
+    min-height: 160px;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            150deg,
+            rgba(4,37,65,.8),
+            rgba(3,20,38,.55)
+        );
+
+    border: 1px solid rgba(255,255,255,.16);
+
+    transition: .3s;
+}
+
+.consequence-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255,140,150,.8);
+}
+
+.consequence-card > span {
+    font-size: 11px;
+    color: #7ceeff;
+    font-weight: 900;
+}
+
+.consequence-card h3 {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.consequence-card p {
+    margin-top: 8px;
+    font-size: 11px;
+    line-height: 1.5;
+    opacity: .7;
+}
+
+
+/* ============================================================
+   BOTÓN SIGUIENTE
+============================================================ */
+
+.next-button {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    margin: 35px auto 0;
+
+    padding: 17px 28px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0e8fff,
+            #0054b8
+        );
+
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 50px;
+
+    font-weight: 900;
+    letter-spacing: .12em;
+
+    box-shadow:
+        0 0 30px rgba(0,157,255,.45);
+
+    transition: .3s;
+}
+
+.next-button strong {
+    font-size: 24px;
+}
+
+.next-button:hover {
+    transform: translateY(-4px) scale(1.04);
+
+    box-shadow:
+        0 0 50px rgba(55,222,255,.7);
+}
+
+
+/* ============================================================
+   OCÉANO
+============================================================ */
+
+#oceanScreen {
+    background: #00679c;
+    overflow: hidden;
+}
+
+#oceanCanvas {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    cursor: crosshair;
+}
+
+#underwaterLight {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% -10%,
+            rgba(110,241,255,.38),
+            transparent 55%
+        );
+
+    mix-blend-mode: screen;
+}
+
+#oceanVignette {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 40%,
+            rgba(0,8,20,.35) 100%
+        );
+}
+
+
+/* ============================================================
+   CABECERA OCÉANO
+============================================================ */
+
+.ocean-header {
+    position: absolute;
+    z-index: 10;
+
+    top: 22px;
+    left: 30px;
+    right: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    pointer-events: none;
+}
+
+.ocean-logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.ocean-logo strong {
+    font-size: 23px;
+    letter-spacing: .12em;
+}
+
+.ocean-logo span {
+    font-size: 9px;
+    letter-spacing: .4em;
+    opacity: .7;
+}
+
+.interaction-help {
+    padding: 9px 15px;
+
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 30px;
+
+    background: rgba(0,20,40,.25);
+    backdrop-filter: blur(10px);
+
+    font-size: 9px;
+    letter-spacing: .15em;
+}
+
+
+/* ============================================================
+   BOTE
+============================================================ */
+
+.trash-bin {
+    position: absolute;
+
+    z-index: 20;
+
+    top: 65px;
+    right: 50%;
+
+    transform: translateX(50%);
+
+    width: 150px;
+
+    background: none;
+    border: none;
+
+    color: white;
+
+    transition: .25s;
+}
+
+.trash-bin:hover {
+    transform: translateX(50%) scale(1.08);
+}
+
+.bin-lid {
+    width: 120px;
+    height: 18px;
+
+    margin: auto;
+
+    border-radius: 8px 8px 3px 3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #c9d0d4,
+            #62696d
+        );
+
+    box-shadow: 0 5px 10px rgba(0,0,0,.4);
+}
+
+.bin-body {
+    width: 100px;
+    height: 115px;
+
+    margin: auto;
+
+    border-radius: 8px 8px 15px 15px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #51585c,
+            #a2a9ad 50%,
+            #44494d
+        );
+
+    box-shadow:
+        inset 8px 0 10px rgba(255,255,255,.12),
+        0 15px 30px rgba(0,0,0,.35);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bin-symbol {
+    font-size: 28px;
+    opacity: .6;
+}
+
+.bin-label {
+    margin-top: 5px;
+
+    font-size: 11px;
+    line-height: 1.15;
+    font-weight: 900;
+
+    letter-spacing: .08em;
+}
+
+
+/* ============================================================
+   MANO
+============================================================ */
+
+.cleanup-hand {
+    position: absolute;
+
+    z-index: 25;
+
+    right: 25px;
+    top: 43%;
+
+    width: 125px;
+
+    padding: 13px 10px;
+
+    border-radius: 28px;
+
+    border: 2px solid rgba(255,255,255,.35);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,181,255,.8),
+            rgba(0,62,115,.8)
+        );
+
+    color: white;
+
+    box-shadow:
+        0 0 35px rgba(40,225,255,.35);
+
+    transition: .3s;
+}
+
+.cleanup-hand:hover {
+    transform: scale(1.08) rotate(-2deg);
+}
+
+.cleanup-hand.active {
+    box-shadow:
+        0 0 60px rgba(85,255,202,.95);
+
+    border-color: #7dffce;
+}
+
+.hand-icon {
+    display: block;
+    font-size: 65px;
+    filter: drop-shadow(0 5px 8px rgba(0,0,0,.4));
+}
+
+.hand-text {
+    display: block;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: .12em;
+}
+
+
+/* ============================================================
+   AYUDA
+============================================================ */
+
+.controls-hint {
+    position: absolute;
+
+    left: 25px;
+    bottom: 105px;
+
+    z-index: 15;
+
+    padding: 14px;
+
+    border-radius: 16px;
+
+    background: rgba(0,20,40,.3);
+
+    backdrop-filter: blur(8px);
+
+    font-size: 10px;
+    line-height: 1.8;
+
+    opacity: .8;
+}
+
+.controls-hint > div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.positive {
+    background: #58ffb4;
+}
+
+.dot.negative {
+    background: #ff7777;
+}
+
+.dot.cleanup {
+    background: #65e8ff;
+}
+
+
+/* ============================================================
+   SALUD
+============================================================ */
+
+.health-panel {
+    position: absolute;
+
+    z-index: 30;
+
+    left: 50%;
+    bottom: 25px;
+
+    transform: translateX(-50%);
+
+    width: min(600px, 75%);
+
+    padding: 12px 15px;
+
+    border-radius: 15px;
+
+    background: rgba(0,17,32,.65);
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    backdrop-filter: blur(15px);
+}
+
+.health-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    font-size: 9px;
+    letter-spacing: .1em;
+}
+
+.health-header > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.health-header strong {
+    font-size: 21px;
+}
+
+#healthStatus {
+    font-weight: 900;
+    opacity: .8;
+}
+
+.health-track {
+    width: 100%;
+    height: 10px;
+
+    margin-top: 8px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.12);
+}
+
+#healthBar {
+    height: 100%;
+    width: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff3e4d,
+            #ffc844 45%,
+            #50f5b0 100%
+        );
+
+    box-shadow:
+        0 0 15px rgba(77,255,190,.5);
+
+    transition: width .5s ease;
+}
+
+
+/* ============================================================
+   MENSAJE DE INTERACCIÓN
+============================================================ */
+
+.interaction-message {
+    position: absolute;
+
+    left: 50%;
+    top: 45%;
+
+    z-index: 50;
+
+    transform: translate(-50%, -50%) scale(.7);
+
+    padding: 14px 22px;
+
+    border-radius: 30px;
+
+    background: rgba(0,15,30,.8);
+
+    border: 1px solid rgba(255,255,255,.4);
+
+    font-weight: 900;
+    letter-spacing: .08em;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: .3s;
+}
+
+.interaction-message.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* ============================================================
+   ALERTA
+============================================================ */
+
+.overlay {
+    position: absolute;
+    z-index: 100;
+
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,0,20,.25),
+            rgba(90,0,0,.94)
+        );
+
+    animation: dangerPulse 1s infinite alternate;
+}
+
+@keyframes dangerPulse {
+    from {
+        background-color: rgba(100,0,0,.85);
+    }
+
+    to {
+        background-color: rgba(255,0,0,.25);
+    }
+}
+
+.warning-symbol {
+    width: 90px;
+    height: 90px;
+
+    display: grid;
+    place-items: center;
+
+    border: 6px solid white;
+    border-radius: 50%;
+
+    font-size: 60px;
+    font-weight: 900;
+
+    margin-bottom: 25px;
+}
+
+.overlay h2 {
+    font-size: clamp(45px, 8vw, 110px);
+    line-height: .85;
+    letter-spacing: -.04em;
+
+    text-shadow:
+        0 10px 40px rgba(0,0,0,.5);
+}
+
+.overlay p {
+    margin-top: 25px;
+    max-width: 550px;
+    font-size: 17px;
+}
+
+
+/* ============================================================
+   PEZ HABLANDO
+============================================================ */
+
+.fish-message {
+    position: absolute;
+
+    z-index: 110;
+
+    left: 50%;
+    bottom: 15%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    width: min(850px, 90%);
+
+    padding: 25px;
+
+    border-radius: 30px;
+
+    background: rgba(0,18,35,.88);
+
+    border: 1px solid rgba(255,255,255,.3);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.45);
+}
+
+.talking-fish {
+    position: relative;
+
+    width: 190px;
+    height: 110px;
+
+    flex-shrink: 0;
+}
+
+.fish-body {
+    position: absolute;
+
+    left: 15px;
+    top: 15px;
+
+    width: 145px;
+    height: 85px;
+
+    border-radius: 60% 45% 45% 60%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #fff59a,
+            #ff7e83 35%,
+            #bd367a 80%
+        );
+
+    box-shadow:
+        inset -15px -10px 25px rgba(0,0,0,.25),
+        0 8px 25px rgba(0,0,0,.3);
+}
+
+.fish-tail {
+    position: absolute;
+
+    right: 0;
+    top: 35px;
+
+    width: 65px;
+    height: 65px;
+
+    background: #bd367a;
+
+    clip-path: polygon(
+        0 50%,
+        100% 0,
+        80% 50%,
+        100% 100%
+    );
+}
+
+.fish-eye {
+    position: absolute;
+
+    right: 20px;
+    top: 25px;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: white;
+}
+
+.fish-eye::after {
+    content: "";
+
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    left: 6px;
+    top: 6px;
+
+    background: #101722;
+
+    border-radius: 50%;
+}
+
+.fish-mouth {
+    position: absolute;
+
+    right: 8px;
+    top: 51px;
+
+    width: 18px;
+    height: 10px;
+
+    border-bottom: 3px solid #36142d;
+    border-radius: 50%;
+}
+
+.speech-bubble span {
+    font-size: 10px;
+    letter-spacing: .2em;
+    color: #65efff;
+    font-weight: 900;
+}
+
+.speech-bubble p {
+    margin-top: 10px;
+    font-size: 22px;
+    line-height: 1.35;
+}
+
+
+/* ============================================================
+   BENEFICIOS
+============================================================ */
+
+.benefits-overlay {
+    position: absolute;
+
+    z-index: 120;
+
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        rgba(0,50,75,.58);
+
+    backdrop-filter: blur(12px);
+}
+
+.benefits-card {
+    width: min(700px, 90%);
+
+    padding: 40px;
+
+    text-align: center;
+
+    border-radius: 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(3,74,101,.96),
+            rgba(0,27,50,.96)
+        );
+
+    border: 1px solid rgba(255,255,255,.4);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.45);
+}
+
+.benefits-wave {
+    font-size: 45px;
+}
+
+.benefits-label {
+    font-size: 10px;
+    letter-spacing: .25em;
+    color: #61ffcc;
+    font-weight: 900;
+}
+
+.benefits-card h2 {
+    margin: 12px 0 25px;
+
+    font-size: clamp(30px, 5vw, 58px);
+    line-height: .9;
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    text-align: left;
+}
+
+.benefits-list div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    background: rgba(255,255,255,.07);
+}
+
+.benefits-list strong {
+    color: #64ffca;
+}
+
+.benefits-list span {
+    font-size: 12px;
+}
+
+#continueButton {
+    margin-top: 25px;
+
+    padding: 13px 25px;
+
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 30px;
+
+    background: #087bd0;
+    color: white;
+
+    font-weight: 900;
+}
+
+
+/* ============================================================
+   CONFETI
+============================================================ */
+
+#confettiLayer {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 130;
+}
+
+.confetti {
+    position: absolute;
+
+    width: 9px;
+    height: 22px;
+
+    top: -30px;
+
+    animation:
+        confettiFall var(--duration) linear forwards;
+
+    background: hsl(var(--hue), 90%, 60%);
+}
+
+@keyframes confettiFall {
+    to {
+        transform:
+            translate(
+                var(--x),
+                110vh
+            )
+            rotate(900deg);
+    }
+}
+
+
+/* ============================================================
+   BURBUJAS DE TRANSICIÓN
+============================================================ */
+
+#bubbleLayer {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 200;
+
+    overflow: hidden;
+}
+
+.transition-bubble {
+    position: absolute;
+
+    bottom: -100px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255,255,255,.8);
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(255,255,255,.8),
+            rgba(255,255,255,.08) 40%,
+            transparent 70%
+        );
+
+    animation:
+        transitionBubble 2.8s ease-out forwards;
+}
+
+@keyframes transitionBubble {
+    0% {
+        transform: translateY(0) scale(.2);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translateY(-120vh)
+            scale(1.4);
+        opacity: 0;
+    }
+}
+
+
+/* ============================================================
+   RESET
+============================================================ */
+
+.reset-button {
+    position: absolute;
+
+    z-index: 50;
+
+    right: 25px;
+    bottom: 25px;
+
+    padding: 8px 13px;
+
+    border-radius: 20px;
+
+    background: rgba(0,15,30,.45);
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,.2);
+
+    font-size: 10px;
+
+    opacity: .6;
+}
+
+.reset-button:hover {
+    opacity: 1;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 1000px) {
+
+    .consequence-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ocean-map {
+        min-height: 950px;
+    }
+
+    .map-orbit {
+        display: none;
+    }
+
+    .map-core {
+        top: 50%;
+    }
+
+    .info-node {
+        width: min(350px, 80%);
+    }
+
+    .node-climate {
+        top: 2%;
+        left: 0;
+    }
+
+    .node-economy {
+        top: 2%;
+        right: 0;
+    }
+
+    .node-biodiversity {
+        bottom: 2%;
+        left: 0;
+    }
+
+    .node-purpose {
+        bottom: 2%;
+        right: 0;
+    }
+
+    .cleanup-hand {
+        right: 10px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .map-header {
+        padding-top: 15px;
+    }
+
+    .ods-label {
+        display: none;
+    }
+
+    .project-name h1 {
+        font-size: 23px;
+    }
+
+    .project-number {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .project-name p {
+        font-size: 8px;
+    }
+
+    .map-title h2 {
+        font-size: 65px;
+    }
+
+    .map-title p {
+        font-size: 14px;
+    }
+
+    .ocean-map {
+        min-height: 1100px;
+    }
+
+    .map-core {
+        width: 260px;
+        height: 260px;
+    }
+
+    .info-node {
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%);
+    }
+
+    .info-node:hover {
+        transform: translateX(-50%) scale(1.03);
+    }
+
+    .node-climate {
+        top: 5%;
+    }
+
+    .node-economy {
+        top: 27%;
+    }
+
+    .node-biodiversity {
+        bottom: 27%;
+    }
+
+    .node-purpose {
+        bottom: 5%;
+    }
+
+    .consequence-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trash-bin {
+        top: 75px;
+        right: 80px;
+        transform: scale(.8);
+    }
+
+    .trash-bin:hover {
+        transform: scale(.85);
+    }
+
+    .cleanup-hand {
+        transform: scale(.8);
+        transform-origin: right center;
+    }
+
+    .controls-hint {
+        display: none;
+    }
+
+    .interaction-help {
+        display: none;
+    }
+
+    .health-panel {
+        width: 88%;
+    }
+
+    .fish-message {
+        flex-direction: column;
+        bottom: 12%;
+        gap: 0;
+    }
+
+    .speech-bubble {
+        text-align: center;
+    }
+
+    .speech-bubble p {
+        font-size: 16px;
+    }
+
+    .benefits-card {
+        padding: 25px;
+    }
+
+    .benefits-list {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- =========================================================
+         PANTALLA 1 — MAPA VISUAL DEL ODS 14
+    ========================================================== -->
+
+    <section id="mapScreen" class="screen active">
+
+        <div class="map-background">
+            <div class="wave wave-1"></div>
+            <div class="wave wave-2"></div>
+            <div class="wave wave-3"></div>
+
+            <div class="decor-fish fish-a">🐠</div>
+            <div class="decor-fish fish-b">🐟</div>
+            <div class="decor-fish fish-c">🐡</div>
+
+            <div class="decor-bubble bubble-a"></div>
+            <div class="decor-bubble bubble-b"></div>
+            <div class="decor-bubble bubble-c"></div>
+            <div class="decor-bubble bubble-d"></div>
+
+            <div class="decor-seaweed seaweed-a">〰</div>
+            <div class="decor-seaweed seaweed-b">〰</div>
+        </div>
+
+        <header class="map-header">
+
+            <div class="project-name">
+                <span class="project-number">14</span>
+
+                <div>
+                    <h1>ABISMO-14</h1>
+                    <p>ECOSISTEMA DIGITAL</p>
+                </div>
+            </div>
+
+            <div class="ods-label">
+                ODS 14
+                <span>VIDA SUBMARINA</span>
+            </div>
+
+        </header>
+
+
+        <div class="map-content">
+
+            <div class="map-title">
+
+                <span class="eyebrow">
+                    OBJETIVO DE DESARROLLO SOSTENIBLE
+                </span>
+
+                <h2>
+                    VIDA<br>
+                    <span>SUBMARINA</span>
+                </h2>
+
+                <p>
+                    El océano es uno de los grandes sistemas que hacen
+                    posible la vida en nuestro planeta.
+                </p>
+
+            </div>
+
+
+            <!-- NÚCLEO DEL MAPA -->
+
+            <div class="ocean-map">
+
+                <div class="map-orbit orbit-1"></div>
+                <div class="map-orbit orbit-2"></div>
+                <div class="map-orbit orbit-3"></div>
+
+                <div class="map-core">
+
+                    <div class="core-glow"></div>
+
+                    <div class="core-icon">
+                        🌊
+                    </div>
+
+                    <h3>ODS 14</h3>
+
+                    <p>
+                        Conservar y utilizar sosteniblemente
+                        los océanos, los mares y los recursos marinos
+                        para el desarrollo sostenible.
+                    </p>
+
+                </div>
+
+
+                <!-- NODO 1 -->
+
+                <article class="info-node node-climate">
+
+                    <div class="node-icon">☁️</div>
+
+                    <div>
+                        <h3>REGULADOR CLIMÁTICO</h3>
+
+                        <p>
+                            Los océanos absorben alrededor del
+                            <strong>30% del CO₂</strong> producido por
+                            la actividad humana y generan más del
+                            <strong>50% del oxígeno</strong> que respiramos.
+                        </p>
+                    </div>
+
+                </article>
+
+
+                <!-- NODO 2 -->
+
+                <article class="info-node node-economy">
+
+                    <div class="node-icon">⚓</div>
+
+                    <div>
+                        <h3>SOSTÉN ECONÓMICO Y SOCIAL</h3>
+
+                        <p>
+                            Miles de millones de personas dependen
+                            de la biodiversidad marina para su
+                            subsistencia, nutrición y empleo.
+                        </p>
+                    </div>
+
+                </article>
+
+
+                <!-- NODO 3 -->
+
+                <article class="info-node node-biodiversity">
+
+                    <div class="node-icon">🐋</div>
+
+                    <div>
+                        <h3>BIODIVERSIDAD</h3>
+
+                        <p>
+                            Desde el fitoplancton microscópico hasta
+                            los mamíferos más grandes del planeta,
+                            las especies forman cadenas tróficas
+                            interconectadas.
+                        </p>
+                    </div>
+
+                </article>
+
+
+                <!-- NODO 4 -->
+
+                <article class="info-node node-purpose">
+
+                    <div class="node-icon">🌎</div>
+
+                    <div>
+                        <h3>¿QUÉ BUSCA?</h3>
+
+                        <p>
+                            Promover un equilibrio donde la actividad
+                            humana no comprometa la capacidad
+                            regenerativa de los ecosistemas acuáticos.
+                        </p>
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- CONSECUENCIAS -->
+
+            <div class="consequences">
+
+                <div class="consequence-title">
+                    <span>⚠</span>
+                    ¿QUÉ OCURRE SI NO CUIDAMOS EL OCÉANO?
+                </div>
+
+
+                <div class="consequence-grid">
+
+                    <article class="consequence-card">
+                        <span>01</span>
+                        <h3>Pérdida de biodiversidad</h3>
+                        <p>
+                            La sobrepesca y la destrucción de hábitats
+                            alteran las cadenas alimentarias.
+                        </p>
+                    </article>
+
+                    <article class="consequence-card">
+                        <span>02</span>
+                        <h3>Microplásticos</h3>
+                        <p>
+                            Los residuos plásticos fragmentados pueden
+                            incorporarse a las cadenas alimentarias.
+                        </p>
+                    </article>
+
+                    <article class="consequence-card">
+                        <span>03</span>
+                        <h3>Acidificación y blanqueamiento</h3>
+                        <p>
+                            El exceso de CO₂ afecta al océano y puede
+                            deteriorar los arrecifes de coral.
+                        </p>
+                    </article>
+
+                    <article class="consequence-card">
+                        <span>04</span>
+                        <h3>Zonas muertas</h3>
+                        <p>
+                            El exceso de nutrientes y aguas residuales
+                            puede reducir el oxígeno disponible.
+                        </p>
+                    </article>
+
+                    <article class="consequence-card">
+                        <span>05</span>
+                        <h3>Impacto socioeconómico</h3>
+                        <p>
+                            La disminución de los recursos pesqueros
+                            afecta alimentación, empleo y economía.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+
+
+            <button id="nextButton" class="next-button">
+                <span>EXPLORAR EL OCÉANO</span>
+                <strong>→</strong>
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         PANTALLA 2 — OCÉANO INTERACTIVO
+    ========================================================== -->
+
+    <section id="oceanScreen" class="screen hidden">
+
+        <canvas id="oceanCanvas"></canvas>
+
+        <div id="underwaterLight"></div>
+
+        <div id="oceanVignette"></div>
+
+
+        <!-- CABECERA -->
+
+        <div class="ocean-header">
+
+            <div class="ocean-logo">
+                <strong>ABISMO-14</strong>
+                <span>ECOSISTEMA DIGITAL</span>
+            </div>
+
+            <div class="interaction-help">
+                MUEVE EL CURSOR · EXPLORA · INTERVIENE
+            </div>
+
+        </div>
+
+
+        <!-- BOTE DE BASURA -->
+
+        <button
+            id="trashBin"
+            class="trash-bin"
+            aria-label="Tirar desechos al océano"
+        >
+
+            <div class="bin-lid"></div>
+
+            <div class="bin-body">
+
+                <div class="bin-symbol">
+                    ♻
+                </div>
+
+                <div class="bin-label">
+                    TIRAR<br>DESECHOS
+                </div>
+
+            </div>
+
+        </button>
+
+
+        <!-- MANO DE LIMPIEZA -->
+
+        <button
+            id="cleanupHand"
+            class="cleanup-hand"
+            aria-label="Limpiar el océano"
+        >
+
+            <span class="hand-icon">🖐️</span>
+
+            <span class="hand-text">
+                LIMPIAR<br>OCÉANO
+            </span>
+
+        </button>
+
+
+        <!-- AYUDA -->
+
+        <div class="controls-hint">
+
+            <div>
+                <span class="dot positive"></span>
+                Haz clic en corales para restaurarlos
+            </div>
+
+            <div>
+                <span class="dot negative"></span>
+                El bote arroja contaminación
+            </div>
+
+            <div>
+                <span class="dot cleanup"></span>
+                Usa la mano para recoger residuos
+            </div>
+
+        </div>
+
+
+        <!-- SALUD DEL OCÉANO -->
+
+        <div class="health-panel">
+
+            <div class="health-header">
+
+                <div>
+                    <span>ESTADO DEL ECOSISTEMA</span>
+                    <strong id="healthText">100%</strong>
+                </div>
+
+                <div id="healthStatus">
+                    OCÉANO SALUDABLE
+                </div>
+
+            </div>
+
+            <div class="health-track">
+                <div id="healthBar"></div>
+            </div>
+
+        </div>
+
+
+        <!-- MENSAJES -->
+
+        <div id="interactionMessage" class="interaction-message"></div>
+
+
+        <!-- ALERTA DE CONTAMINACIÓN -->
+
+        <div id="contaminationOverlay" class="overlay hidden">
+
+            <div class="warning-symbol">
+                !
+            </div>
+
+            <h2>
+                SEÑAL DE<br>
+                CONTAMINACIÓN
+            </h2>
+
+            <p>
+                El equilibrio del ecosistema está llegando
+                a un punto crítico.
+            </p>
+
+        </div>
+
+
+        <!-- PEZ HABLANDO -->
+
+        <div id="sadFishOverlay" class="fish-message hidden">
+
+            <div class="talking-fish">
+
+                <div class="fish-body">
+                    <div class="fish-eye"></div>
+                    <div class="fish-mouth"></div>
+                </div>
+
+                <div class="fish-tail"></div>
+
+            </div>
+
+            <div class="speech-bubble">
+
+                <span>MENSAJE DEL OCÉANO</span>
+
+                <p>
+                    Necesitamos que nos cuides.
+                    La vida marina depende del equilibrio
+                    de este ecosistema.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- BENEFICIOS -->
+
+        <div id="benefitsOverlay" class="benefits-overlay hidden">
+
+            <div class="benefits-card">
+
+                <div class="benefits-wave">🌊</div>
+
+                <span class="benefits-label">
+                    ECOSISTEMA RESTAURADO
+                </span>
+
+                <h2>
+                    BENEFICIOS DE CUIDAR<br>
+                    LA VIDA MARINA
+                </h2>
+
+                <div class="benefits-list">
+
+                    <div>
+                        <strong>01</strong>
+                        <span>Conservación de la biodiversidad</span>
+                    </div>
+
+                    <div>
+                        <strong>02</strong>
+                        <span>Océanos saludables y productivos</span>
+                    </div>
+
+                    <div>
+                        <strong>03</strong>
+                        <span>Protección de ecosistemas y costas</span>
+                    </div>
+
+                    <div>
+                        <strong>04</strong>
+                        <span>Bienestar para las comunidades humanas</span>
+                    </div>
+
+                </div>
+
+                <button id="continueButton">
+                    CONTINUAR EXPLORANDO
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- BURBUJAS DE TRANSICIÓN -->
+
+        <div id="bubbleLayer"></div>
+
+
+        <!-- CONFETI -->
+
+        <div id="confettiLayer"></div>
+
+
+        <!-- REINICIAR -->
+
+        <button id="resetButton" class="reset-button">
+            ↻ Reiniciar ecosistema
+        </button>
+
+    </section>
+
+</div>
+
+
+
+
+
+<script>
+/* JavaScript integrado desde script.js */
+/* ============================================================
+   ABISMO-14 — ECOSISTEMA DIGITAL
+   Motor interactivo realizado con JavaScript + Canvas
+============================================================ */
+
+
+/* ============================================================
+   ELEMENTOS HTML
+============================================================ */
+
+const mapScreen = document.getElementById("mapScreen");
+const oceanScreen = document.getElementById("oceanScreen");
+
+const nextButton = document.getElementById("nextButton");
+
+const canvas = document.getElementById("oceanCanvas");
+const ctx = canvas.getContext("2d");
+
+const trashBin = document.getElementById("trashBin");
+const cleanupHand = document.getElementById("cleanupHand");
+
+const healthBar = document.getElementById("healthBar");
+const healthText = document.getElementById("healthText");
+const healthStatus = document.getElementById("healthStatus");
+
+const interactionMessage =
+    document.getElementById("interactionMessage");
+
+const contaminationOverlay =
+    document.getElementById("contaminationOverlay");
+
+const sadFishOverlay =
+    document.getElementById("sadFishOverlay");
+
+const benefitsOverlay =
+    document.getElementById("benefitsOverlay");
+
+const continueButton =
+    document.getElementById("continueButton");
+
+const bubbleLayer =
+    document.getElementById("bubbleLayer");
+
+const confettiLayer =
+    document.getElementById("confettiLayer");
+
+const resetButton =
+    document.getElementById("resetButton");
+
+
+/* ============================================================
+   UTILIDADES
+============================================================ */
+
+const TAU = Math.PI * 2;
+
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function randomInt(min, max) {
+    return Math.floor(random(min, max + 1));
+}
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function lerp(a, b, amount) {
+    return a + (b - a) * amount;
+}
+
+function distance(x1, y1, x2, y2) {
+    return Math.hypot(x2 - x1, y2 - y1);
+}
+
+
+/* ============================================================
+   TAMAÑO DEL CANVAS
+============================================================ */
+
+let W = window.innerWidth;
+let H = window.innerHeight;
+let DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+function resizeCanvas() {
+
+    W = window.innerWidth;
+    H = window.innerHeight;
+
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
+
+
+/* ============================================================
+   ESTADO GENERAL DEL ECOSISTEMA
+============================================================ */
+
+let oceanHealth = 100;
+
+let previousHealth = 100;
+
+let damagedOnce = false;
+
+let contaminationWarningShown = false;
+
+let celebrationShown = false;
+
+let celebrationActive = false;
+
+let cleanupMode = false;
+
+let globalTime = 0;
+
+let mouse = {
+    x: W / 2,
+    y: H / 2,
+
+    previousX: W / 2,
+    previousY: H / 2,
+
+    speed: 0
+};
+
+
+/* ============================================================
+   OBJETOS DEL ECOSISTEMA
+============================================================ */
+
+const fishes = [];
+const corals = [];
+const algae = [];
+const bubbles = [];
+const particles = [];
+const trash = [];
+
+const schools = [];
+
+
+/* ============================================================
+   PALETA DE PECES
+============================================================ */
+
+const fishColors = [
+    ["#ff6b7a", "#ffb36a"],
+    ["#42e8ff", "#1265ff"],
+    ["#ffdb55", "#ff6d4b"],
+    ["#d36aff", "#6d4aff"],
+    ["#5dffac", "#00a978"],
+    ["#ff8ae8", "#a13cff"],
+    ["#ffffff", "#4cc9ff"],
+    ["#ffa65b", "#e83d65"]
+];
+
+
+/* ============================================================
+   CREAR PEZ
+============================================================ */
+
+function createFish(x, y, scale = 1, type = "fish") {
+
+    const palette =
+        fishColors[randomInt(0, fishColors.length - 1)];
+
+    fishes.push({
+
+        x: x ?? random(0, W),
+        y: y ?? random(H * .2, H * .85),
+
+        vx: random(-.65, .65),
+        vy: random(-.25, .25),
+
+        size: random(14, 28) * scale,
+
+        angle: random(0, TAU),
+
+        targetAngle: random(0, TAU),
+
+        palette,
+
+        type,
+
+        phase: random(0, TAU),
+
+        depth: random(.65, 1.3),
+
+        energy: 1,
+
+        opacity: 1,
+
+        clicked: 0,
+
+        trapped: false,
+
+        danceOffset: random(0, TAU)
+
+    });
+}
+
+
+/* ============================================================
+   PECES PEQUEÑOS
+============================================================ */
+
+for (let i = 0; i < 42; i++) {
+    createFish();
+}
+
+
+/* ============================================================
+   ESPECIES ESPECIALES
+============================================================ */
+
+createFish(W * .2, H * .35, 2.5, "shark");
+
+createFish(W * .75, H * .4, 1.7, "turtle");
+
+createFish(W * .45, H * .55, 2, "ray");
+
+createFish(W * .8, H * .65, 1.4, "jellyfish");
+
+createFish(W * .3, H * .7, .8, "seahorse");
+
+createFish(W * .6, H * .3, 3, "whale");
+
+
+/* ============================================================
+   CORALES
+============================================================ */
+
+function createCoral() {
+
+    corals.push({
+
+        x: random(0, W),
+        y: H - random(35, 110),
+
+        size: random(45, 100),
+
+        branches: randomInt(4, 8),
+
+        phase: random(0, TAU),
+
+        health: 1,
+
+        glow: 0,
+
+        hue: randomInt(0, 360)
+
+    });
+}
+
+for (let i = 0; i < 15; i++) {
+    createCoral();
+}
+
+
+/* ============================================================
+   ALGAS
+============================================================ */
+
+function createAlgae() {
+
+    algae.push({
+
+        x: random(0, W),
+
+        y: H,
+
+        height: random(60, 190),
+
+        width: random(2, 6),
+
+        phase: random(0, TAU),
+
+        speed: random(.6, 1.4),
+
+        hue: randomInt(105, 170)
+
+    });
+}
+
+for (let i = 0; i < 40; i++) {
+    createAlgae();
+}
+
+
+/* ============================================================
+   PARTÍCULAS
+============================================================ */
+
+for (let i = 0; i < 280; i++) {
+
+    particles.push({
+
+        x: random(0, W),
+
+        y: random(0, H),
+
+        size: random(.5, 2.5),
+
+        vx: random(-.1, .1),
+
+        vy: random(-.08, .08),
+
+        alpha: random(.1, .65),
+
+        phase: random(0, TAU)
+
+    });
+}
+
+
+/* ============================================================
+   BURBUJAS
+============================================================ */
+
+function createBubble(
+    x = random(0, W),
+    y = H + 20,
+    force = 1
+) {
+
+    bubbles.push({
+
+        x,
+        y,
+
+        r: random(2, 8) * force,
+
+        vy: random(.3, 1.1) * force,
+
+        vx: random(-.25, .25),
+
+        life: 1,
+
+        phase: random(0, TAU)
+
+    });
+}
+
+
+/* ============================================================
+   EVENTOS DE INTERFAZ
+============================================================ */
+
+nextButton.addEventListener("click", () => {
+
+    mapScreen.classList.remove("active");
+    mapScreen.classList.add("hidden");
+
+    oceanScreen.classList.remove("hidden");
+
+    createTransitionBubbles();
+
+    showMessage(
+        "EL ECOSISTEMA ESTÁ LISTO. EXPLÓRALO.",
+        "#61edff"
+    );
+
+});
+
+
+cleanupHand.addEventListener("click", () => {
+
+    cleanupMode = !cleanupMode;
+
+    cleanupHand.classList.toggle(
+        "active",
+        cleanupMode
+    );
+
+    canvas.style.cursor =
+        cleanupMode
+            ? "cell"
+            : "crosshair";
+
+    if (cleanupMode) {
+
+        showMessage(
+            "MODO DE LIMPIEZA ACTIVADO",
+            "#65ffca"
+        );
+
+    } else {
+
+        showMessage(
+            "MODO DE EXPLORACIÓN",
+            "#63eaff"
+        );
+
+    }
+
+});
+
+
+/* ============================================================
+   BOTÓN DE CONTAMINACIÓN
+============================================================ */
+
+trashBin.addEventListener("click", () => {
+
+    spawnPollutionBurst();
+
+    damageOcean(
+        random(7, 12)
+    );
+
+    showMessage(
+        "INTERVENCIÓN NEGATIVA · CONTAMINACIÓN",
+        "#ff7272"
+    );
+
+});
+
+
+/* ============================================================
+   MOUSE
+============================================================ */
+
+canvas.addEventListener("pointermove", event => {
+
+    const rect = canvas.getBoundingClientRect();
+
+    mouse.previousX = mouse.x;
+    mouse.previousY = mouse.y;
+
+    mouse.x = event.clientX - rect.left;
+    mouse.y = event.clientY - rect.top;
+
+    mouse.speed =
+        distance(
+            mouse.x,
+            mouse.y,
+            mouse.previousX,
+            mouse.previousY
+        );
+
+    /* corriente submarina */
+
+    if (mouse.speed > 2) {
+
+        for (let i = 0; i < 3; i++) {
+
+            particles.push({
+
+                x: mouse.x + random(-10, 10),
+                y: mouse.y + random(-10, 10),
+
+                size: random(.5, 2),
+
+                vx: random(-.4, .4),
+                vy: random(-.4, .4),
+
+                alpha: .7,
+
+                phase: random(0, TAU)
+
+            });
+
+        }
+
+        if (Math.random() < .45) {
+            createBubble(mouse.x, mouse.y, .5);
+        }
+    }
+
+});
+
+
+/* ============================================================
+   CLICK EN EL OCÉANO
+============================================================ */
+
+canvas.addEventListener("pointerdown", event => {
+
+    const rect = canvas.getBoundingClientRect();
+
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+
+    /* EVENTOS ALEATORIOS: barco y animal enredado */
+
+    if (hitEntangled(x, y)) return;
+
+    if (hitShip(x, y)) return;
+
+
+    /* ---------------------------------------------
+       1. LIMPIAR BASURA
+    --------------------------------------------- */
+
+    const trashIndex =
+        findTrashAt(x, y);
+
+    if (trashIndex !== -1) {
+
+        const item =
+            trash[trashIndex];
+
+        trash.splice(trashIndex, 1);
+
+        if (item.type === "oil") {
+
+            healOcean(5);
+
+            showMessage(
+                "PETRÓLEO LIMPIADO · +5 SALUD",
+                "#64ffcb"
+            );
+
+        } else {
+
+            healOcean(2);
+
+            showMessage(
+                "DESECHO RECOGIDO · +2 SALUD",
+                "#64ffcb"
+            );
+
+        }
+
+        createCleanupBurst(x, y);
+
+        return;
+    }
+
+
+    /* ---------------------------------------------
+       2. RESTAURAR CORAL
+    --------------------------------------------- */
+
+    const coral =
+        findCoralAt(x, y);
+
+    if (coral) {
+
+        coral.health =
+            clamp(
+                coral.health + .18,
+                0,
+                1
+            );
+
+        coral.glow = 1;
+
+        healOcean(4);
+
+        createHealingBurst(
+            coral.x,
+            coral.y - coral.size * .5
+        );
+
+        showMessage(
+            "CORAL RESTAURADO · +4 SALUD",
+            "#65ffcc"
+        );
+
+        return;
+    }
+
+
+    /* ---------------------------------------------
+       3. LIBERAR TORTUGA
+    --------------------------------------------- */
+
+    const turtle =
+        fishes.find(
+            fish =>
+                fish.type === "turtle" &&
+                fish.trapped &&
+                distance(
+                    x,
+                    y,
+                    fish.x,
+                    fish.y
+                ) < fish.size * 2.5
+        );
+
+    if (turtle) {
+
+        turtle.trapped = false;
+
+        healOcean(8);
+
+        showMessage(
+            "TORTUGA LIBERADA · +8 SALUD",
+            "#64ffcc"
+        );
+
+        createHealingBurst(
+            turtle.x,
+            turtle.y
+        );
+
+        return;
+    }
+
+
+    /* ---------------------------------------------
+       4. REACCIÓN DE PECES
+    --------------------------------------------- */
+
+    const clickedFish =
+        fishes.find(
+            fish =>
+                distance(
+                    x,
+                    y,
+                    fish.x,
+                    fish.y
+                ) <
+                fish.size * 1.7
+        );
+
+    if (clickedFish) {
+
+        clickedFish.clicked = 1;
+
+        clickedFish.targetAngle =
+            clickedFish.angle + Math.PI;
+
+        createBubble(
+            clickedFish.x,
+            clickedFish.y,
+            .8
+        );
+
+        showMessage(
+            "LA VIDA MARINA RESPONDE A TU PRESENCIA",
+            "#73eaff"
+        );
+
+    }
+
+});
+
+
+/* ============================================================
+   REINICIAR
+============================================================ */
+
+resetButton.addEventListener("click", resetEcosystem);
+
+continueButton.addEventListener("click", () => {
+
+    benefitsOverlay.classList.add("hidden");
+
+});
+
+
+function resetEcosystem() {
+
+    oceanHealth = 100;
+
+    previousHealth = 100;
+
+    damagedOnce = false;
+
+    contaminationWarningShown = false;
+
+    celebrationShown = false;
+
+    celebrationActive = false;
+
+    cleanupMode = false;
+
+    cleanupHand.classList.remove("active");
+
+    contaminationOverlay.classList.add("hidden");
+
+    sadFishOverlay.classList.add("hidden");
+
+    benefitsOverlay.classList.add("hidden");
+
+    trash.length = 0;
+
+    resetRandomEvents();
+
+    fishes.forEach(fish => {
+
+        fish.y =
+            random(
+                H * .2,
+                H * .85
+            );
+
+        fish.energy = 1;
+        fish.opacity = 1;
+        fish.trapped = false;
+
+    });
+
+    corals.forEach(coral => {
+        coral.health = 1;
+    });
+
+    updateHealthUI();
+
+    showMessage(
+        "ECOSISTEMA REINICIADO",
+        "#65eaff"
+    );
+
+}
+
+
+/* ============================================================
+   CONTAMINACIÓN
+============================================================ */
+
+function spawnPollutionBurst() {
+
+    const amount = randomInt(13, 21);
+
+    for (let i = 0; i < amount; i++) {
+
+        const types = [
+            "can",
+            "plastic",
+            "paper",
+            "bottle",
+            "oil"
+        ];
+
+        const type =
+            types[randomInt(0, types.length - 1)];
+
+        trash.push({
+
+            type,
+
+            x: W / 2 + random(-90, 90),
+
+            y: 150 + random(-20, 20),
+
+            vx: random(-1.5, 1.5),
+
+            vy: random(.5, 2.2),
+
+            rotation: random(0, TAU),
+
+            rotationSpeed: random(-.03, .03),
+
+            size: random(.65, 1.2),
+
+            settled: false,
+
+            phase: random(0, TAU)
+
+        });
+
+    }
+
+    /* Más residuos se distribuyen por el océano */
+
+    for (let i = 0; i < 7; i++) {
+
+        trash.push({
+
+            type:
+                Math.random() < .4
+                    ? "oil"
+                    : "plastic",
+
+            x: random(W * .1, W * .9),
+
+            y: random(H * .25, H * .75),
+
+            vx: random(-.5, .5),
+
+            vy: random(.1, .4),
+
+            rotation: random(0, TAU),
+
+            rotationSpeed: random(-.01, .01),
+
+            size: random(.8, 1.5),
+
+            settled: true,
+
+            phase: random(0, TAU)
+
+        });
+
+    }
+}
+
+
+/* ============================================================
+   ENCONTRAR BASURA
+============================================================ */
+
+function findTrashAt(x, y) {
+
+    for (let i = trash.length - 1; i >= 0; i--) {
+
+        const item = trash[i];
+
+        const radius =
+            item.type === "oil"
+                ? 55 * item.size
+                : 30 * item.size;
+
+        if (
+            distance(
+                x,
+                y,
+                item.x,
+                item.y
+            ) < radius
+        ) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+
+/* ============================================================
+   ENCONTRAR CORAL
+============================================================ */
+
+function findCoralAt(x, y) {
+
+    for (let i = corals.length - 1; i >= 0; i--) {
+
+        const coral = corals[i];
+
+        if (
+            distance(
+                x,
+                y,
+                coral.x,
+                coral.y - coral.size / 2
+            ) < coral.size
+        ) {
+            return coral;
+        }
+    }
+
+    return null;
+}
+
+
+/* ============================================================
+   SALUD DEL OCÉANO
+============================================================ */
+
+function damageOcean(amount) {
+
+    oceanHealth =
+        clamp(
+            oceanHealth - amount,
+            0,
+            100
+        );
+
+    damagedOnce = true;
+
+    updateHealthUI();
+
+}
+
+
+function healOcean(amount) {
+
+    oceanHealth =
+        clamp(
+            oceanHealth + amount,
+            0,
+            100
+        );
+
+    updateHealthUI();
+
+}
+
+
+function updateHealthUI() {
+
+    healthText.textContent =
+        Math.round(oceanHealth) + "%";
+
+    healthBar.style.width =
+        oceanHealth + "%";
+
+
+    if (oceanHealth > 75) {
+
+        healthStatus.textContent =
+            "OCÉANO SALUDABLE";
+
+    } else if (oceanHealth > 50) {
+
+        healthStatus.textContent =
+            "ECOSISTEMA ALTERADO";
+
+    } else if (oceanHealth > 25) {
+
+        healthStatus.textContent =
+            "PELIGRO AMBIENTAL";
+
+    } else {
+
+        healthStatus.textContent =
+            "ESTADO CRÍTICO";
+
+    }
+
+
+    /* advertencia */
+
+    if (
+        oceanHealth <= 15 &&
+        !contaminationWarningShown
+    ) {
+
+        contaminationWarningShown = true;
+
+        showContaminationWarning();
+
+    }
+
+
+    /* recuperar */
+
+    if (
+        oceanHealth >= 99.5 &&
+        damagedOnce &&
+        !celebrationShown
+    ) {
+
+        celebrationShown = true;
+
+        startCelebration();
+
+    }
+
+
+    if (oceanHealth > 25) {
+
+        contaminationWarningShown = false;
+
+    }
+
+}
+
+
+/* ============================================================
+   ALERTA
+============================================================ */
+
+function showContaminationWarning() {
+
+    contaminationOverlay.classList.remove(
+        "hidden"
+    );
+
+    setTimeout(() => {
+
+        contaminationOverlay.classList.add(
+            "hidden"
+        );
+
+        sadFishOverlay.classList.remove(
+            "hidden"
+        );
+
+        setTimeout(() => {
+
+            sadFishOverlay.classList.add(
+                "hidden"
+            );
+
+        }, 6500);
+
+    }, 3000);
+
+}
+
+
+/* ============================================================
+   MENSAJES
+============================================================ */
+
+let messageTimeout;
+
+function showMessage(text, color) {
+
+    interactionMessage.textContent = text;
+
+    interactionMessage.style.borderColor =
+        color;
+
+    interactionMessage.style.color =
+        color;
+
+    interactionMessage.classList.add("show");
+
+    clearTimeout(messageTimeout);
+
+    messageTimeout =
+        setTimeout(() => {
+
+            interactionMessage.classList.remove(
+                "show"
+            );
+
+        }, 2200);
+
+}
+
+
+/* ============================================================
+   BURBUJAS DE TRANSICIÓN
+============================================================ */
+
+function createTransitionBubbles() {
+
+    bubbleLayer.innerHTML = "";
+
+    for (let i = 0; i < 100; i++) {
+
+        const bubble =
+            document.createElement("div");
+
+        bubble.className =
+            "transition-bubble";
+
+        const size =
+            random(8, 70);
+
+        bubble.style.width =
+            size + "px";
+
+        bubble.style.height =
+            size + "px";
+
+        bubble.style.left =
+            random(0, 100) + "%";
+
+        bubble.style.animationDelay =
+            random(0, 1.7) + "s";
+
+        bubble.style.animationDuration =
+            random(1.8, 3.5) + "s";
+
+        bubbleLayer.appendChild(bubble);
+
+    }
+
+    setTimeout(() => {
+
+        bubbleLayer.innerHTML = "";
+
+    }, 5000);
+
+}
+
+
+/* ============================================================
+   EVENTOS ALEATORIOS
+   1) Barco contaminador   2) Animal marino enredado
+============================================================ */
+
+const oceanEvents = {
+    nextTime: 12,          /* primer evento a los ~12 s */
+    ship: null,
+    entangled: null        /* { fish, net, hits, born, ... } */
+};
+
+/* Ventana emergente de logro (inyectada sin tocar el HTML existente) */
+(function injectEventStyles() {
+
+    const style = document.createElement("style");
+
+    style.textContent = `
+    .event-popup {
+        position: fixed;
+        left: 50%;
+        top: 22%;
+        transform: translate(-50%, -20px) scale(.9);
+        padding: 18px 34px;
+        border-radius: 22px;
+        border: 2px solid rgba(100, 255, 204, .9);
+        background: linear-gradient(135deg, rgba(0, 70, 90, .92), rgba(0, 140, 150, .88));
+        color: #eafffa;
+        font-family: inherit;
+        font-size: clamp(18px, 3.2vw, 30px);
+        font-weight: 700;
+        letter-spacing: .5px;
+        text-align: center;
+        text-shadow: 0 0 14px rgba(100, 255, 204, .8);
+        box-shadow: 0 0 40px rgba(100, 255, 204, .55), inset 0 0 25px rgba(255, 255, 255, .12);
+        backdrop-filter: blur(6px);
+        pointer-events: none;
+        opacity: 0;
+        z-index: 9999;
+        transition: opacity .35s ease, transform .35s cubic-bezier(.2, 1.4, .4, 1);
+    }
+    .event-popup.show {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+    .event-popup small {
+        display: block;
+        margin-top: 6px;
+        font-size: .5em;
+        font-weight: 500;
+        opacity: .9;
+    }`;
+
+    document.head.appendChild(style);
+
+})();
+
+const eventPopup = document.createElement("div");
+eventPopup.className = "event-popup";
+document.body.appendChild(eventPopup);
+
+let eventPopupTimeout;
+
+function showEventPopup(title, subtitle, color) {
+
+    eventPopup.innerHTML =
+        title + (subtitle ? `<small>${subtitle}</small>` : "");
+
+    if (color) {
+        eventPopup.style.borderColor = color;
+    }
+
+    eventPopup.classList.add("show");
+
+    clearTimeout(eventPopupTimeout);
+
+    eventPopupTimeout = setTimeout(() => {
+        eventPopup.classList.remove("show");
+    }, 2800);
+}
+
+function oceanScreenVisible() {
+    return !oceanScreen.classList.contains("hidden");
+}
+
+function shipScale() {
+    return clamp(Math.min(W, H * 1.4) / 900, .65, 1.25);
+}
+
+function shipSurfaceY() {
+    return Math.max(72, H * .1);
+}
+
+
+/* ---------------- BARCO CONTAMINADOR ---------------- */
+
+function spawnPollutingShip() {
+
+    const fromLeft = Math.random() < .5;
+
+    oceanEvents.ship = {
+        x: fromLeft ? -180 : W + 180,
+        dir: fromLeft ? 1 : -1,
+        speed: random(.45, .8),
+        hp: 3,
+        flash: 0,
+        born: globalTime,
+        leaving: false,
+        dropTimer: 1.5,
+        smoke: [],
+        slick: []
+    };
+
+    showMessage(
+        "¡ALERTA! UN BARCO ESTÁ VERTIENDO DESECHOS · HAZ CLIC EN ÉL",
+        "#ff9f5a"
+    );
+}
+
+function dropShipWaste(ship) {
+
+    const s = shipScale();
+    const surfaceY = shipSurfaceY();
+    const types = ["can", "plastic", "paper", "bottle", "oil"];
+    const amount = randomInt(2, 3);
+
+    for (let i = 0; i < amount; i++) {
+
+        trash.push({
+            type: types[randomInt(0, types.length - 1)],
+            x: ship.x - ship.dir * 60 * s + random(-25, 25),
+            y: surfaceY + 20 * s + random(0, 10),
+            vx: random(-.6, .6) - ship.dir * .3,
+            vy: random(.3, 1.2),
+            rotation: random(0, TAU),
+            rotationSpeed: random(-.03, .03),
+            size: random(.65, 1.15),
+            settled: false,
+            phase: random(0, TAU)
+        });
+    }
+
+    /* mancha de aceite sobre la superficie */
+    ship.slick.push({
+        x: ship.x - ship.dir * 70 * s,
+        life: 1
+    });
+
+    damageOcean(random(1.5, 2.5));
+}
+
+function repelShip(ship) {
+
+    ship.leaving = true;
+    ship.dir = ship.x < W / 2 ? -1 : 1;
+    ship.speed = 3;
+    ship.hp = 0;
+}
+
+function updateShip() {
+
+    const ship = oceanEvents.ship;
+    if (!ship) return;
+
+    const dt = .016;
+
+    ship.flash = Math.max(0, ship.flash - dt * 4);
+
+    /* movimiento */
+    ship.x += ship.dir * ship.speed;
+
+    if (!ship.leaving) {
+
+        /* patrulla entre los bordes */
+        if (ship.x > W * .92 && ship.dir > 0) ship.dir = -1;
+        if (ship.x < W * .08 && ship.dir < 0) ship.dir = 1;
+
+        /* tras ~28 s se va solo */
+        if (globalTime - ship.born > 28) {
+            ship.leaving = true;
+            ship.speed = 1.6;
+        }
+
+        /* desagüe periódico + daño progresivo */
+        ship.dropTimer -= dt;
+        damageOcean(.0035 * 1);   /* ≈ 0.2 de salud por segundo */
+
+        if (ship.dropTimer <= 0) {
+            dropShipWaste(ship);
+            ship.dropTimer = random(1.8, 2.8);
+        }
+    }
+
+    /* humo */
+    if (Math.random() < .2) {
+        const s = shipScale();
+        ship.smoke.push({
+            x: ship.x + ship.dir * -10 * s,
+            y: shipSurfaceY() - 62 * s,
+            r: random(5, 9) * s,
+            life: 1
+        });
+    }
+
+    ship.smoke.forEach(p => {
+        p.x += random(-.2, .6) + ship.dir * -.2;
+        p.y -= .5;
+        p.r += .08;
+        p.life -= .008;
+    });
+    ship.smoke = ship.smoke.filter(p => p.life > 0);
+
+    ship.slick.forEach(o => o.life -= .004);
+    ship.slick = ship.slick.filter(o => o.life > 0);
+
+    /* salió de pantalla */
+    if (
+        ship.leaving &&
+        (ship.x < -260 || ship.x > W + 260)
+    ) {
+        oceanEvents.ship = null;
+    }
+}
+
+function hitShip(x, y) {
+
+    const ship = oceanEvents.ship;
+    if (!ship || ship.leaving) return false;
+
+    const s = shipScale();
+    const sy = shipSurfaceY();
+
+    if (
+        Math.abs(x - ship.x) < 100 * s &&
+        y > sy - 80 * s &&
+        y < sy + 35 * s
+    ) {
+
+        ship.hp--;
+        ship.flash = 1;
+
+        createCleanupBurst(x, y);
+
+        if (ship.hp <= 0) {
+
+            repelShip(ship);
+            healOcean(6);
+
+            showEventPopup(
+                "¡Barco contaminador detenido!",
+                "+6 salud del océano",
+                "#ffb36a"
+            );
+
+        } else {
+
+            showMessage(
+                `DETENIENDO AL BARCO… ${ship.hp} CLIC${ship.hp > 1 ? "S" : ""} MÁS`,
+                "#ffb36a"
+            );
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+function drawShip() {
+
+    const ship = oceanEvents.ship;
+    if (!ship) return;
+
+    const s = shipScale();
+    const sy = shipSurfaceY();
+    const bob = Math.sin(globalTime * 1.6) * 2.5;
+    const tilt = Math.sin(globalTime * 1.2) * .03;
+
+    /* manchas de aceite en la superficie */
+    ship.slick.forEach(o => {
+        ctx.save();
+        ctx.globalAlpha = o.life * .55;
+        const g = ctx.createRadialGradient(o.x, sy + 6, 2, o.x, sy + 6, 55 * s);
+        g.addColorStop(0, "rgba(10,6,20,.9)");
+        g.addColorStop(.6, "rgba(40,20,70,.45)");
+        g.addColorStop(1, "rgba(60,30,90,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.ellipse(o.x, sy + 6, 55 * s, 9 * s, 0, 0, TAU);
+        ctx.fill();
+        ctx.restore();
+    });
+
+    /* humo */
+    ship.smoke.forEach(p => {
+        ctx.save();
+        ctx.globalAlpha = p.life * .5;
+        ctx.fillStyle = "rgba(40,40,48,1)";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, TAU);
+        ctx.fill();
+        ctx.restore();
+    });
+
+    ctx.save();
+    ctx.translate(ship.x, sy + bob);
+    ctx.rotate(tilt);
+    ctx.scale(s * ship.dir, s);
+
+    /* sombra bajo el casco */
+    ctx.fillStyle = "rgba(0,20,35,.35)";
+    ctx.beginPath();
+    ctx.ellipse(0, 22, 95, 9, 0, 0, TAU);
+    ctx.fill();
+
+    /* casco */
+    const hull = ctx.createLinearGradient(0, -5, 0, 28);
+    hull.addColorStop(0, "#7a2a2a");
+    hull.addColorStop(.45, "#4a1d24");
+    hull.addColorStop(1, "#1c0d12");
+    ctx.fillStyle = hull;
+    ctx.beginPath();
+    ctx.moveTo(-90, -6);
+    ctx.lineTo(95, -6);
+    ctx.quadraticCurveTo(88, 22, 62, 28);
+    ctx.lineTo(-68, 28);
+    ctx.quadraticCurveTo(-88, 18, -90, -6);
+    ctx.closePath();
+    ctx.fill();
+
+    /* franja */
+    ctx.fillStyle = "#e0b04a";
+    ctx.fillRect(-88, -6, 182, 5);
+
+    /* contenedores */
+    const cols = ["#d9534f", "#3d8bd9", "#e8b83a", "#4fae7a"];
+    for (let i = 0; i < 4; i++) {
+        ctx.fillStyle = cols[i];
+        ctx.fillRect(-82 + i * 24, -24, 22, 18);
+        ctx.fillStyle = "rgba(0,0,0,.25)";
+        ctx.fillRect(-82 + i * 24, -24, 22, 3);
+    }
+
+    /* cabina */
+    const cab = ctx.createLinearGradient(0, -52, 0, -6);
+    cab.addColorStop(0, "#f2f2f2");
+    cab.addColorStop(1, "#b9c3cc");
+    ctx.fillStyle = cab;
+    ctx.fillRect(22, -44, 46, 38);
+    ctx.fillStyle = "#2a4a66";
+    ctx.fillRect(28, -38, 34, 9);
+
+    /* chimenea */
+    ctx.fillStyle = "#2b2b33";
+    ctx.fillRect(-14, -56, 14, 34);
+    ctx.fillStyle = "#c0392b";
+    ctx.fillRect(-14, -56, 14, 6);
+
+    /* tubo de vertido */
+    ctx.strokeStyle = "rgba(20,10,30,.9)";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(-90, 6);
+    ctx.lineTo(-104, 18);
+    ctx.stroke();
+
+    /* destello al recibir clic */
+    if (ship.flash > 0) {
+        ctx.globalAlpha = ship.flash * .6;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(-92, -58, 190, 90);
+    }
+
+    ctx.restore();
+
+    /* estela de olas */
+    ctx.save();
+    ctx.strokeStyle = "rgba(220,250,255,.55)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = -110; i <= 110; i += 6) {
+        const wx = ship.x + i * s;
+        const wy = sy + 26 * s + Math.sin(globalTime * 3 + i * .15) * 2.5;
+        if (i === -110) ctx.moveTo(wx, wy);
+        else ctx.lineTo(wx, wy);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    /* aviso parpadeante */
+    if (!ship.leaving) {
+        ctx.save();
+        ctx.globalAlpha = .55 + Math.sin(globalTime * 6) * .35;
+        ctx.fillStyle = "#ff5a4a";
+        ctx.font = `700 ${Math.round(18 * s)}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillText("⚠", ship.x, sy - 88 * s);
+        ctx.restore();
+    }
+}
+
+
+/* ---------------- ANIMAL ENREDADO ---------------- */
+
+function spawnEntangledAnimal() {
+
+    const candidates = fishes.filter(f =>
+        !f.trapped &&
+        (f.type === "turtle" || f.type === "ray" || f.type === "fish") &&
+        f.x > 80 && f.x < W - 80 &&
+        f.y > H * .2 && f.y < H * .8
+    );
+
+    if (!candidates.length) return;
+
+    /* preferir turtle / ray para que sea más visible */
+    const special = candidates.filter(f => f.type !== "fish");
+    const pool = special.length && Math.random() < .75 ? special : candidates;
+    const fish = pool[randomInt(0, pool.length - 1)];
+
+    fish.trapped = true;
+    fish.entangled = true;
+
+    const name =
+        fish.type === "turtle" ? "UNA TORTUGA"
+            : fish.type === "ray" ? "UNA MANTA RAYA"
+                : "UN PEZ";
+
+    oceanEvents.entangled = {
+        fish,
+        anchorX: fish.x,
+        anchorY: fish.y,
+        hits: 0,
+        needed: 3,
+        born: globalTime,
+        shake: 0,
+        radius: Math.max(fish.size * 2.1, 46),
+        scraps: Array.from({ length: 6 }, () => ({
+            a: random(0, TAU),
+            d: random(.8, 1.15),
+            t: randomInt(0, 2),
+            r: random(0, TAU)
+        }))
+    };
+
+    showMessage(
+        `¡${name} ESTÁ ENREDADA EN UNA RED! HAZ CLIC PARA LIBERARLA`,
+        "#ff7a7a"
+    );
+}
+
+function updateEntangled() {
+
+    const ev = oceanEvents.entangled;
+    if (!ev) return;
+
+    const f = ev.fish;
+
+    ev.shake = Math.max(0, ev.shake - .05);
+
+    /* movimiento restringido: oscila alrededor del ancla */
+    f.vx = 0;
+    f.vy = 0;
+    f.x = ev.anchorX + Math.sin(globalTime * 2.4) * 4 +
+        (Math.random() - .5) * ev.shake * 10;
+    f.y = ev.anchorY + Math.cos(globalTime * 1.9) * 3 +
+        (Math.random() - .5) * ev.shake * 10;
+
+    /* mientras siga atrapado, la salud baja lentamente */
+    damageOcean(.002);
+
+    /* si pasa demasiado tiempo, se libera por sí solo con penalización */
+    if (globalTime - ev.born > 35) {
+
+        f.trapped = false;
+        f.entangled = false;
+        f.vx = random(-.6, .6);
+        f.vy = random(-.2, .2);
+
+        damageOcean(5);
+
+        showMessage(
+            "LA RED SE ROMPIÓ SOLA · EL ANIMAL QUEDÓ HERIDO · −5 SALUD",
+            "#ff7a7a"
+        );
+
+        oceanEvents.entangled = null;
+    }
+}
+
+function hitEntangled(x, y) {
+
+    const ev = oceanEvents.entangled;
+    if (!ev) return false;
+
+    const f = ev.fish;
+
+    if (distance(x, y, f.x, f.y) > ev.radius * 1.15) {
+        return false;
+    }
+
+    ev.hits++;
+    ev.shake = 1;
+
+    createCleanupBurst(x, y);
+    createBubble(f.x, f.y, .8);
+
+    if (ev.hits >= ev.needed) {
+
+        f.trapped = false;
+        f.entangled = false;
+        f.vx = (Math.random() < .5 ? -1 : 1) * random(.9, 1.4);
+        f.vy = random(-.4, -.1);
+        f.clicked = 1;
+
+        healOcean(10);
+
+        createHealingBurst(f.x, f.y);
+
+        showEventPopup(
+            "¡Has liberado a la vida submarina!",
+            "+10 salud del océano",
+            "#64ffcc"
+        );
+
+        oceanEvents.entangled = null;
+
+    } else {
+
+        showMessage(
+            `CORTANDO LA RED… ${ev.needed - ev.hits} CLIC${ev.needed - ev.hits > 1 ? "S" : ""} MÁS`,
+            "#ffd27a"
+        );
+    }
+
+    return true;
+}
+
+function drawEntangled() {
+
+    const ev = oceanEvents.entangled;
+    if (!ev) return;
+
+    const f = ev.fish;
+    const R = ev.radius;
+    const progress = ev.hits / ev.needed;
+    const wob = Math.sin(globalTime * 2) * .06 + ev.shake * .12;
+
+    ctx.save();
+    ctx.translate(f.x, f.y);
+    ctx.rotate(wob);
+    ctx.globalAlpha = 1 - progress * .45;
+
+    /* red: malla circular */
+    ctx.strokeStyle = "rgba(235,245,215,.85)";
+    ctx.lineWidth = 1.6;
+
+    for (let i = 1; i <= 3; i++) {
+        ctx.beginPath();
+        ctx.arc(0, 0, R * (i / 3), 0, TAU);
+        ctx.stroke();
+    }
+
+    for (let i = 0; i < 12; i++) {
+        const a = (i / 12) * TAU;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R);
+        ctx.stroke();
+    }
+
+    /* red gruesa exterior */
+    ctx.strokeStyle = "rgba(190,215,160,.9)";
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    ctx.arc(0, 0, R, 0, TAU);
+    ctx.stroke();
+
+    /* residuos atrapados en la red */
+    ev.scraps.forEach(sc => {
+        ctx.save();
+        ctx.translate(
+            Math.cos(sc.a) * R * sc.d,
+            Math.sin(sc.a) * R * sc.d
+        );
+        ctx.rotate(sc.r + Math.sin(globalTime + sc.a) * .3);
+
+        if (sc.t === 0) {
+            ctx.fillStyle = "rgba(235,245,255,.75)";   /* bolsa */
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 11, 7, 0, 0, TAU);
+            ctx.fill();
+        } else if (sc.t === 1) {
+            ctx.fillStyle = "rgba(120,200,255,.7)";    /* botella */
+            ctx.fillRect(-4, -9, 8, 18);
+            ctx.fillStyle = "rgba(255,255,255,.8)";
+            ctx.fillRect(-2, -12, 4, 4);
+        } else {
+            ctx.fillStyle = "rgba(220,90,70,.8)";      /* boya */
+            ctx.beginPath();
+            ctx.arc(0, 0, 6, 0, TAU);
+            ctx.fill();
+        }
+        ctx.restore();
+    });
+
+    ctx.restore();
+
+    /* anillo de pulso para invitar al clic */
+    ctx.save();
+    ctx.globalAlpha = .35 + Math.sin(globalTime * 5) * .25;
+    ctx.strokeStyle = "#ff7a7a";
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8, 8]);
+    ctx.beginPath();
+    ctx.arc(f.x, f.y, R + 12 + Math.sin(globalTime * 3) * 3, 0, TAU);
+    ctx.stroke();
+    ctx.restore();
+}
+
+
+/* ---------------- PROGRAMADOR DE EVENTOS ---------------- */
+
+function updateRandomEvents() {
+
+    updateShip();
+    updateEntangled();
+
+    if (
+        !oceanScreenVisible() ||
+        celebrationActive ||
+        oceanHealth <= 0
+    ) {
+        return;
+    }
+
+    if (globalTime < oceanEvents.nextTime) return;
+
+    /* siguiente intento entre 14 y 28 s */
+    oceanEvents.nextTime = globalTime + random(14, 28);
+
+    const options = [];
+
+    if (!oceanEvents.ship) options.push("ship");
+    if (!oceanEvents.entangled) options.push("entangled");
+
+    if (!options.length) return;
+
+    const choice = options[randomInt(0, options.length - 1)];
+
+    if (choice === "ship") spawnPollutingShip();
+    else spawnEntangledAnimal();
+}
+
+function resetRandomEvents() {
+
+    if (oceanEvents.entangled) {
+        oceanEvents.entangled.fish.entangled = false;
+    }
+
+    oceanEvents.ship = null;
+    oceanEvents.entangled = null;
+    oceanEvents.nextTime = globalTime + 12;
+
+    eventPopup.classList.remove("show");
+}
+
+
+/* ============================================================
+   ANIMACIÓN PRINCIPAL
+============================================================ */
+
+function animate() {
+
+    globalTime += .016;
+
+    updateWorld();
+
+    drawWorld();
+
+    requestAnimationFrame(animate);
+
+}
+
+animate();
+
+
+/* ============================================================
+   ACTUALIZAR ECOSISTEMA
+============================================================ */
+
+function updateWorld() {
+
+    const pollution =
+        1 - oceanHealth / 100;
+
+
+    /* ---------------------------------------------
+       PARTÍCULAS
+    --------------------------------------------- */
+
+    particles.forEach((p, index) => {
+
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+
+        const d =
+            Math.hypot(dx, dy);
+
+        if (d < 170) {
+
+            p.vx +=
+                dx / d * .008;
+
+            p.vy +=
+                dy / d * .008;
+
+        }
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        p.vx *= .995;
+        p.vy *= .995;
+
+        p.x +=
+            Math.sin(
+                globalTime +
+                p.phase
+            ) * .03;
+
+        if (p.x < -20) p.x = W + 20;
+        if (p.x > W + 20) p.x = -20;
+
+        if (p.y < -20) p.y = H + 20;
+        if (p.y > H + 20) p.y = -20;
+
+
+        /* Limitar memoria */
+
+        if (particles.length > 500) {
+
+            particles.splice(0, 50);
+
+        }
+
+    });
+
+
+    /* ---------------------------------------------
+       PECES
+    --------------------------------------------- */
+
+    fishes.forEach(fish => {
+
+        const dx =
+            mouse.x - fish.x;
+
+        const dy =
+            mouse.y - fish.y;
+
+        const d =
+            Math.hypot(dx, dy);
+
+
+        /* Corriente del cursor */
+
+        if (d < 180) {
+
+            const force =
+                (1 - d / 180) * .045;
+
+            fish.vx -=
+                dx / Math.max(d, 1) *
+                force;
+
+            fish.vy -=
+                dy / Math.max(d, 1) *
+                force;
+
+        }
+
+
+        /* Movimiento autónomo */
+
+        fish.vx +=
+            Math.cos(
+                globalTime * .35 +
+                fish.phase
+            ) * .002;
+
+        fish.vy +=
+            Math.sin(
+                globalTime * .42 +
+                fish.phase
+            ) * .002;
+
+
+        /* Contaminación */
+
+        const danger =
+            clamp(
+                (55 - oceanHealth) / 55,
+                0,
+                1
+            );
+
+        if (
+            danger > 0 &&
+            fish.type !== "whale"
+        ) {
+
+            fish.vy +=
+                danger * .0035;
+
+            fish.energy =
+                lerp(
+                    1,
+                    .25,
+                    danger
+                );
+
+            fish.opacity =
+                lerp(
+                    1,
+                    .35,
+                    danger
+                );
+
+        }
+
+
+        /* Tortuga atrapada */
+
+        if (
+            fish.type === "turtle" &&
+            oceanHealth < 65
+        ) {
+
+            fish.trapped = true;
+
+        }
+
+
+        if (fish.trapped) {
+
+            fish.vx *= .98;
+            fish.vy *= .98;
+
+            fish.vy += .002;
+
+        }
+
+
+        /* Celebración */
+
+        if (celebrationActive) {
+
+            fish.y +=
+                Math.sin(
+                    globalTime * 7 +
+                    fish.danceOffset
+                ) * .7;
+
+            fish.angle +=
+                Math.sin(
+                    globalTime * 5 +
+                    fish.danceOffset
+                ) * .015;
+
+        }
+
+
+        fish.x += fish.vx * fish.depth;
+        fish.y += fish.vy * fish.depth;
+
+
+        /* Fricción */
+
+        fish.vx *= .994;
+        fish.vy *= .994;
+
+
+        /* velocidad mínima */
+
+        const speed =
+            Math.hypot(
+                fish.vx,
+                fish.vy
+            );
+
+        if (speed < .18) {
+
+            const direction =
+                Math.random() < .5
+                    ? -1
+                    : 1;
+
+            fish.vx +=
+                direction * .02;
+
+        }
+
+
+        fish.targetAngle =
+            Math.atan2(
+                fish.vy,
+                fish.vx
+            );
+
+
+        let angleDifference =
+            fish.targetAngle -
+            fish.angle;
+
+        while (angleDifference > Math.PI)
+            angleDifference -= TAU;
+
+        while (angleDifference < -Math.PI)
+            angleDifference += TAU;
+
+        fish.angle +=
+            angleDifference * .025;
+
+
+        /* Teletransportar suavemente */
+
+        if (fish.x < -100)
+            fish.x = W + 100;
+
+        if (fish.x > W + 100)
+            fish.x = -100;
+
+        if (fish.y < 80)
+            fish.y = 80;
+
+        if (fish.y > H + 80)
+            fish.y = 100;
+
+
+        fish.clicked *= .95;
+
+    });
+
+
+    /* ---------------------------------------------
+       ALGAS
+    --------------------------------------------- */
+
+    algae.forEach(a => {
+
+        a.phase += .01 * a.speed;
+
+    });
+
+
+    /* ---------------------------------------------
+       CORALES
+    --------------------------------------------- */
+
+    corals.forEach(coral => {
+
+        coral.health =
+            lerp(
+                coral.health,
+                oceanHealth / 100,
+                .002
+            );
+
+        coral.glow *= .96;
+
+    });
+
+
+    /* ---------------------------------------------
+       BASURA
+    --------------------------------------------- */
+
+    updateTrash();
+
+
+    /* ---------------------------------------------
+       BURBUJAS
+    --------------------------------------------- */
+
+    for (let i = bubbles.length - 1; i >= 0; i--) {
+
+        const b = bubbles[i];
+
+        b.y -= b.vy;
+
+        b.x +=
+            Math.sin(
+                globalTime * 1.5 +
+                b.phase
+            ) * .3;
+
+        b.life -= .002;
+
+        if (
+            b.y < -30 ||
+            b.life <= 0
+        ) {
+
+            bubbles.splice(i, 1);
+
+        }
+
+    }
+
+
+    /* Burbujas naturales */
+
+    if (
+        Math.random() <
+        .025 * (oceanHealth / 100)
+    ) {
+
+        createBubble();
+
+    }
+
+
+    updateRandomEvents();
+
+    previousHealth =
+        oceanHealth;
+
+}
+
+
+/* ============================================================
+   ACTUALIZAR BASURA
+============================================================ */
+
+function updateTrash() {
+
+    trash.forEach(item => {
+
+        item.rotation +=
+            item.rotationSpeed;
+
+
+        if (!item.settled) {
+
+            item.x += item.vx;
+
+            item.y += item.vy;
+
+            item.vy += .018;
+
+            if (item.y > H - 120) {
+
+                item.settled = true;
+
+                item.vy = 0;
+
+            }
+
+        } else {
+
+            if (item.type === "oil") {
+
+                item.x +=
+                    Math.sin(
+                        globalTime * .8 +
+                        item.phase
+                    ) * .4;
+
+                item.y +=
+                    Math.cos(
+                        globalTime * .5 +
+                        item.phase
+                    ) * .12;
+
+            } else {
+
+                item.x +=
+                    Math.sin(
+                        globalTime +
+                        item.phase
+                    ) * .12;
+
+            }
+
+        }
+
+
+        if (item.x < -100)
+            item.x = W + 100;
+
+        if (item.x > W + 100)
+            item.x = -100;
+
+    });
+
+}
+
+
+/* ============================================================
+   DIBUJAR TODO
+============================================================ */
+
+function drawWorld() {
+
+    const pollution =
+        1 - oceanHealth / 100;
+
+
+    /* ---------------------------------------------
+       FONDO DEL OCÉANO
+    --------------------------------------------- */
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            H
+        );
+
+    const brightness =
+        1 - pollution * .65;
+
+    gradient.addColorStop(
+        0,
+        `rgb(
+            ${Math.round(30 * brightness + 5)},
+            ${Math.round(180 * brightness)},
+            ${Math.round(230 * brightness)}
+        )`
+    );
+
+    gradient.addColorStop(
+        .45,
+        `rgb(
+            ${Math.round(0 * brightness)},
+            ${Math.round(80 * brightness)},
+            ${Math.round(125 * brightness)}
+        )`
+    );
+
+    gradient.addColorStop(
+        1,
+        `rgb(
+            ${Math.round(0)},
+            ${Math.round(20 * brightness)},
+            ${Math.round(38 * brightness)}
+        )`
+    );
+
+    ctx.fillStyle = gradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* ---------------------------------------------
+       RAYOS DE LUZ
+    --------------------------------------------- */
+
+    drawLightRays(pollution);
+
+
+    /* ---------------------------------------------
+       PARTÍCULAS
+    --------------------------------------------- */
+
+    drawParticles();
+
+
+    /* ---------------------------------------------
+       ALGAS
+    --------------------------------------------- */
+
+    drawAlgae(pollution);
+
+
+    /* ---------------------------------------------
+       CORALES
+    --------------------------------------------- */
+
+    corals.forEach(coral => {
+
+        drawCoral(
+            coral,
+            pollution
+        );
+
+    });
+
+
+    /* ---------------------------------------------
+       BURBUJAS
+    --------------------------------------------- */
+
+    drawBubbles();
+
+
+    /* ---------------------------------------------
+       PECES
+    --------------------------------------------- */
+
+    const sortedFish =
+        [...fishes].sort(
+            (a, b) =>
+                a.depth - b.depth
+        );
+
+    sortedFish.forEach(fish => {
+
+        ctx.save();
+
+        ctx.globalAlpha =
+            fish.opacity;
+
+        ctx.translate(
+            fish.x,
+            fish.y
+        );
+
+        ctx.rotate(
+            fish.angle
+        );
+
+        drawMarineAnimal(
+            fish,
+            pollution
+        );
+
+        ctx.restore();
+
+    });
+
+
+    drawEntangled();
+
+    /* ---------------------------------------------
+       BASURA
+    --------------------------------------------- */
+
+    trash.forEach(item => {
+
+        drawTrash(item);
+
+    });
+
+    drawShip();
+
+
+    /* ---------------------------------------------
+       SUELO
+    --------------------------------------------- */
+
+    drawSeabed(pollution);
+
+
+    /* ---------------------------------------------
+       OSCURECIMIENTO POR CONTAMINACIÓN
+    --------------------------------------------- */
+
+    if (pollution > 0) {
+
+        const darkness =
+            pollution * .5;
+
+        ctx.fillStyle =
+            `rgba(0,8,15,${darkness})`;
+
+        ctx.fillRect(
+            0,
+            0,
+            W,
+            H
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   RAYOS DE LUZ
+============================================================ */
+
+function drawLightRays(pollution) {
+
+    ctx.save();
+
+    ctx.globalAlpha =
+        .14 *
+        (1 - pollution);
+
+    ctx.fillStyle = "#bffcff";
+
+    for (let i = 0; i < 9; i++) {
+
+        const x =
+            i * W / 8 +
+            Math.sin(globalTime * .2 + i) * 30;
+
+        ctx.beginPath();
+
+        ctx.moveTo(x, 0);
+
+        ctx.lineTo(
+            x + 100,
+            H * .65
+        );
+
+        ctx.lineTo(
+            x + 150,
+            H * .65
+        );
+
+        ctx.lineTo(
+            x + 25,
+            0
+        );
+
+        ctx.fill();
+
+    }
+
+    ctx.restore();
+
+}
+
+
+/* ============================================================
+   PARTÍCULAS
+============================================================ */
+
+function drawParticles() {
+
+    particles.forEach(p => {
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            TAU
+        );
+
+        ctx.fillStyle =
+            `rgba(185,250,255,${p.alpha})`;
+
+        ctx.fill();
+
+    });
+
+}
+
+
+/* ============================================================
+   ALGAS
+============================================================ */
+
+function drawAlgae(pollution) {
+
+    algae.forEach(a => {
+
+        const health =
+            1 - pollution;
+
+        const height =
+            a.height *
+            lerp(.5, 1, health);
+
+        const sway =
+            Math.sin(
+                globalTime * a.speed +
+                a.phase
+            ) *
+            lerp(
+                2,
+                13,
+                health
+            );
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            a.x,
+            a.y
+        );
+
+        ctx.quadraticCurveTo(
+            a.x + sway,
+            a.y - height * .45,
+            a.x + sway * .5,
+            a.y - height
+        );
+
+        ctx.strokeStyle =
+            `hsla(
+                ${a.hue},
+                ${40 + health * 50}%,
+                ${20 + health * 35}%,
+                ${.45 + health * .4}
+            )`;
+
+        ctx.lineWidth =
+            a.width *
+            lerp(.7, 1.5, health);
+
+        ctx.lineCap = "round";
+
+        ctx.stroke();
+
+    });
+
+}
+
+
+/* ============================================================
+   CORAL
+============================================================ */
+
+function drawCoral(coral, pollution) {
+
+    const health =
+        coral.health;
+
+    const saturation =
+        lerp(5, 85, health);
+
+    const lightness =
+        lerp(25, 62, health);
+
+    ctx.save();
+
+    ctx.translate(
+        coral.x,
+        coral.y
+    );
+
+    ctx.lineCap = "round";
+
+    for (
+        let i = 0;
+        i < coral.branches;
+        i++
+    ) {
+
+        const angle =
+            -Math.PI / 2 +
+            random(-.55, .55);
+
+        const length =
+            coral.size *
+            random(.45, .9);
+
+        const bend =
+            Math.sin(
+                globalTime +
+                coral.phase +
+                i
+            ) *
+            3 *
+            health;
+
+        ctx.beginPath();
+
+        ctx.moveTo(0, 0);
+
+        const endX =
+            Math.cos(angle) *
+            length;
+
+        const endY =
+            Math.sin(angle) *
+            length;
+
+        ctx.quadraticCurveTo(
+            endX * .3 + bend,
+            endY * .4,
+            endX + bend,
+            endY
+        );
+
+        ctx.strokeStyle =
+            `hsl(
+                ${(coral.hue + i * 35) % 360},
+                ${saturation}%,
+                ${lightness}%
+            )`;
+
+        ctx.lineWidth =
+            random(5, 11) *
+            lerp(.6, 1, health);
+
+        ctx.stroke();
+
+        /* pequeños pólipos */
+
+        if (health > .3) {
+
+            ctx.fillStyle =
+                `hsla(
+                    ${(coral.hue + i * 35) % 360},
+                    90%,
+                    70%,
+                    ${health}
+                )`;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                endX + bend,
+                endY,
+                5 * health,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+        }
+
+    }
+
+    /* resplandor */
+
+    if (coral.glow > .01) {
+
+        ctx.shadowBlur =
+            30 * coral.glow;
+
+        ctx.shadowColor =
+            "#7ffff0";
+
+    }
+
+    ctx.restore();
+
+}
+
+
+/* ============================================================
+   BURBUJAS
+============================================================ */
+
+function drawBubbles() {
+
+    bubbles.forEach(b => {
+
+        ctx.save();
+
+        ctx.globalAlpha =
+            b.life * .75;
+
+        ctx.strokeStyle =
+            "rgba(225,255,255,.8)";
+
+        ctx.lineWidth = 1.3;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            b.x,
+            b.y,
+            b.r,
+            0,
+            TAU
+        );
+
+        ctx.stroke();
+
+        ctx.fillStyle =
+            "rgba(255,255,255,.15)";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            b.x - b.r * .3,
+            b.y - b.r * .3,
+            b.r * .25,
+            0,
+            TAU
+        );
+
+        ctx.fill();
+
+        ctx.restore();
+
+    });
+
+}
+
+
+/* ============================================================
+   ANIMALES MARINOS
+============================================================ */
+
+function drawMarineAnimal(
+    fish,
+    pollution
+) {
+
+    switch (fish.type) {
+
+        case "shark":
+            drawShark(fish);
+            break;
+
+        case "turtle":
+            drawTurtle(fish);
+            break;
+
+        case "ray":
+            drawRay(fish);
+            break;
+
+        case "jellyfish":
+            drawJellyfish(fish);
+            break;
+
+        case "seahorse":
+            drawSeahorse(fish);
+            break;
+
+        case "whale":
+            drawWhale(fish);
+            break;
+
+        default:
+            drawFish(fish);
+
+    }
+
+
+    /* plástico alrededor de tortuga */
+
+    if (fish.trapped) {
+
+        ctx.save();
+
+        ctx.rotate(
+            Math.sin(globalTime) * .1
+        );
+
+        ctx.strokeStyle =
+            "rgba(230,250,255,.75)";
+
+        ctx.lineWidth = 5;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            fish.size * 1.6,
+            0,
+            TAU
+        );
+
+        ctx.stroke();
+
+        ctx.strokeStyle =
+            "rgba(180,240,255,.35)";
+
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            fish.size * 2,
+            0,
+            TAU
+        );
+
+        ctx.stroke();
+
+        ctx.restore();
+
+    }
+
+}
+
+
+/* ============================================================
+   PEZ
+============================================================ */
+
+function drawFish(fish) {
+
+    const s =
+        fish.size;
+
+    const [c1, c2] =
+        fish.palette;
+
+
+    /* sombra */
+
+    ctx.shadowColor =
+        "rgba(0,0,0,.4)";
+
+    ctx.shadowBlur = 10;
+
+
+    /* cuerpo */
+
+    const body =
+        ctx.createRadialGradient(
+            -s * .35,
+            -s * .35,
+            s * .05,
+            0,
+            0,
+            s
+        );
+
+    body.addColorStop(0, "#ffffff");
+    body.addColorStop(.2, c1);
+    body.addColorStop(1, c2);
+
+    ctx.fillStyle = body;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        s * 1.25,
+        s * .62,
+        0,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* cola */
+
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = c2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -s * .95,
+        0
+    );
+
+    ctx.lineTo(
+        -s * 1.75,
+        -s * .7
+    );
+
+    ctx.lineTo(
+        -s * 1.65,
+        s * .65
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* aleta dorsal */
+
+    ctx.fillStyle = c1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -s * .48
+    );
+
+    ctx.lineTo(
+        s * .15,
+        -s * .95
+    );
+
+    ctx.lineTo(
+        s * .5,
+        -s * .4
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* aleta inferior */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        .1 * s,
+        s * .45
+    );
+
+    ctx.lineTo(
+        .45 * s,
+        s * .85
+    );
+
+    ctx.lineTo(
+        .65 * s,
+        s * .3
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* ojo */
+
+    ctx.fillStyle = "white";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        s * .7,
+        -s * .18,
+        s * .16,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle = "#07121d";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        s * .75,
+        -s * .18,
+        s * .07,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* detalles */
+
+    ctx.strokeStyle =
+        "rgba(255,255,255,.4)";
+
+    ctx.lineWidth = 1.5;
+
+    for (let i = 0; i < 3; i++) {
+
+        ctx.beginPath();
+
+        ctx.arc(
+            s * .15 + i * 3,
+            0,
+            s * .3,
+            -1,
+            1
+        );
+
+        ctx.stroke();
+
+    }
+
+}
+
+
+/* ============================================================
+   TIBURÓN
+============================================================ */
+
+function drawShark(fish) {
+
+    const s =
+        fish.size;
+
+    ctx.shadowColor =
+        "rgba(0,0,0,.45)";
+
+    ctx.shadowBlur = 14;
+
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            -s,
+            0,
+            s
+        );
+
+    gradient.addColorStop(
+        0,
+        "#d9e8ee"
+    );
+
+    gradient.addColorStop(
+        .45,
+        "#647f8d"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#273e4b"
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        s * 1.8,
+        s * .58,
+        0,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* nariz */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        s * 1.6,
+        -s * .25
+    );
+
+    ctx.lineTo(
+        s * 2.25,
+        0
+    );
+
+    ctx.lineTo(
+        s * 1.6,
+        s * .25
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* cola */
+
+    ctx.fillStyle =
+        "#536c79";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -s * 1.4,
+        0
+    );
+
+    ctx.lineTo(
+        -s * 2.1,
+        -s * .85
+    );
+
+    ctx.lineTo(
+        -s * 1.85,
+        0
+    );
+
+    ctx.lineTo(
+        -s * 2.1,
+        s * .85
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* aleta dorsal */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -s * .1,
+        -s * .45
+    );
+
+    ctx.lineTo(
+        s * .25,
+        -s * 1.25
+    );
+
+    ctx.lineTo(
+        s * .55,
+        -s * .4
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* ojo */
+
+    ctx.fillStyle =
+        "#111";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        s * 1.55,
+        -s * .18,
+        s * .08,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* branquias */
+
+    ctx.strokeStyle =
+        "rgba(20,30,35,.7)";
+
+    ctx.lineWidth = 2;
+
+    for (let i = 0; i < 4; i++) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            s * .8 + i * 5,
+            -s * .2
+        );
+
+        ctx.lineTo(
+            s * .75 + i * 5,
+            s * .25
+        );
+
+        ctx.stroke();
+
+    }
+
+}
+
+
+/* ============================================================
+   TORTUGA
+============================================================ */
+
+function drawTurtle(fish) {
+
+    const s =
+        fish.size;
+
+    /* aletas */
+
+    ctx.fillStyle =
+        "#3c9f8a";
+
+    const flipper =
+        (x, y, rotation) => {
+
+            ctx.save();
+
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                0,
+                0,
+                s * .25,
+                s * .7,
+                0,
+                0,
+                TAU
+            );
+
+            ctx.fill();
+
+            ctx.restore();
+
+        };
+
+    flipper(
+        -s * .8,
+        -s * .6,
+        -.8
+    );
+
+    flipper(
+        -s * .8,
+        s * .6,
+        .8
+    );
+
+    flipper(
+        s * .55,
+        -s * .55,
+        .7
+    );
+
+    flipper(
+        s * .55,
+        s * .55,
+        -.7
+    );
+
+
+    /* caparazón */
+
+    const shell =
+        ctx.createRadialGradient(
+            -s * .25,
+            -s * .3,
+            2,
+            0,
+            0,
+            s
+        );
+
+    shell.addColorStop(
+        0,
+        "#82d28c"
+    );
+
+    shell.addColorStop(
+        .5,
+        "#267e63"
+    );
+
+    shell.addColorStop(
+        1,
+        "#123f3c"
+    );
+
+    ctx.fillStyle =
+        shell;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        s * 1.05,
+        s * .75,
+        0,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* patrón del caparazón */
+
+    ctx.strokeStyle =
+        "rgba(150,255,190,.4)";
+
+    ctx.lineWidth = 2;
+
+    for (let i = -1; i <= 1; i++) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            i * s * .35,
+            -s * .6
+        );
+
+        ctx.lineTo(
+            i * s * .35,
+            s * .6
+        );
+
+        ctx.stroke();
+
+    }
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        s * .7,
+        s * .48,
+        0,
+        0,
+        TAU
+    );
+
+    ctx.stroke();
+
+
+    /* cabeza */
+
+    ctx.fillStyle =
+        "#5ac19b";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        s * 1,
+        0,
+        s * .32,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* ojo */
+
+    ctx.fillStyle =
+        "#081c18";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        s * 1.12,
+        -s * .1,
+        s * .055,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+}
+
+
+/* ============================================================
+   RAYA / MANTA
+============================================================ */
+
+function drawRay(fish) {
+
+    const s =
+        fish.size;
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            -s,
+            0,
+            s
+        );
+
+    gradient.addColorStop(
+        0,
+        "#b58cff"
+    );
+
+    gradient.addColorStop(
+        .5,
+        "#6545b9"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#29214e"
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        s * 1.5,
+        0
+    );
+
+    ctx.bezierCurveTo(
+        s * .6,
+        -s * .9,
+        -s * .8,
+        -s,
+        -s * 1.7,
+        -.2 * s
+    );
+
+    ctx.bezierCurveTo(
+        -s * .8,
+        s * .7,
+        s * .7,
+        s * .9,
+        s * 1.5,
+        0
+    );
+
+    ctx.fill();
+
+
+    /* cola */
+
+    ctx.strokeStyle =
+        "#7257c6";
+
+    ctx.lineWidth = s * .15;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -s * 1.1,
+        0
+    );
+
+    ctx.quadraticCurveTo(
+        -s * 2,
+        s,
+        -s * 2.7,
+        .2 * s
+    );
+
+    ctx.stroke();
+
+
+    /* ojos */
+
+    ctx.fillStyle =
+        "#07111d";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        s * .8,
+        -.1 * s,
+        s * .07,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+}
+
+
+/* ============================================================
+   MEDUSA
+============================================================ */
+
+function drawJellyfish(fish) {
+
+    const s =
+        fish.size;
+
+    const glow =
+        ctx.createRadialGradient(
+            0,
+            -s * .2,
+            2,
+            0,
+            0,
+            s
+        );
+
+    glow.addColorStop(
+        0,
+        "rgba(255,180,255,.95)"
+    );
+
+    glow.addColorStop(
+        .5,
+        "rgba(156,92,255,.75)"
+    );
+
+    glow.addColorStop(
+        1,
+        "rgba(54,30,120,.2)"
+    );
+
+    ctx.fillStyle =
+        glow;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        s,
+        Math.PI,
+        0
+    );
+
+    ctx.lineTo(
+        s,
+        s * .4
+    );
+
+    ctx.quadraticCurveTo(
+        0,
+        s * .75,
+        -s,
+        s * .4
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.strokeStyle =
+        "rgba(220,170,255,.8)";
+
+    ctx.lineWidth = 2;
+
+    for (let i = -2; i <= 2; i++) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            i * s * .35,
+            s * .35
+        );
+
+        ctx.quadraticCurveTo(
+            i * s * .45,
+            s,
+            i * s * .3,
+            s * 1.4
+        );
+
+        ctx.stroke();
+
+    }
+
+}
+
+
+/* ============================================================
+   CABALLITO DE MAR
+============================================================ */
+
+function drawSeahorse(fish) {
+
+    const s =
+        fish.size;
+
+    ctx.strokeStyle =
+        "#ffcb58";
+
+    ctx.lineWidth =
+        s * .28;
+
+    ctx.lineCap =
+        "round";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -s * .7
+    );
+
+    ctx.bezierCurveTo(
+        -s * .5,
+        -s * .3,
+        s * .4,
+        0,
+        0,
+        s * .5
+    );
+
+    ctx.bezierCurveTo(
+        -s * .7,
+        s * .8,
+        -s * .4,
+        s * 1.1,
+        0,
+        s * .9
+    );
+
+    ctx.stroke();
+
+
+    ctx.fillStyle =
+        "#ffdb67";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -s * .75,
+        s * .28,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+}
+
+
+/* ============================================================
+   BALLENA
+============================================================ */
+
+function drawWhale(fish) {
+
+    const s =
+        fish.size;
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            -s,
+            0,
+            s
+        );
+
+    gradient.addColorStop(
+        0,
+        "#5e91ad"
+    );
+
+    gradient.addColorStop(
+        .6,
+        "#294f69"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#142d40"
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        s * 2,
+        s * .75,
+        0,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* cola */
+
+    ctx.fillStyle =
+        "#355f75";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -s * 1.5,
+        0
+    );
+
+    ctx.quadraticCurveTo(
+        -s * 2.1,
+        -s * .8,
+        -s * 2.5,
+        -.2 * s
+    );
+
+    ctx.quadraticCurveTo(
+        -s * 2.1,
+        s * .8,
+        -s * 1.5,
+        0
+    );
+
+    ctx.fill();
+
+
+    /* aleta */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        s * .45
+    );
+
+    ctx.lineTo(
+        s * .45,
+        s * 1.15
+    );
+
+    ctx.lineTo(
+        s * .75,
+        s * .3
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* ojo */
+
+    ctx.fillStyle =
+        "#071722";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        s * 1.45,
+        -.2 * s,
+        s * .08,
+        0,
+        TAU
+    );
+
+    ctx.fill();
+
+
+    /* respiradero */
+
+    ctx.strokeStyle =
+        "rgba(220,250,255,.4)";
+
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        s * .65,
+        -s * .5
+    );
+
+    ctx.quadraticCurveTo(
+        s * .5,
+        -s * 1.1,
+        s * .8,
+        -s * 1.4
+    );
+
+    ctx.stroke();
+
+}
+
+
+/* ============================================================
+   RESIDUOS
+============================================================ */
+
+function drawTrash(item) {
+
+    ctx.save();
+
+    ctx.translate(
+        item.x,
+        item.y
+    );
+
+    ctx.rotate(
+        item.rotation
+    );
+
+    const s =
+        item.size;
+
+
+    /* LATA */
+
+    if (item.type === "can") {
+
+        const gradient =
+            ctx.createLinearGradient(
+                -10,
+                0,
+                10,
+                0
+            );
+
+        gradient.addColorStop(
+            0,
+            "#515a61"
+        );
+
+        gradient.addColorStop(
+            .5,
+            "#d1d7da"
+        );
+
+        gradient.addColorStop(
+            1,
+            "#4a5358"
+        );
+
+        ctx.fillStyle =
+            gradient;
+
+        ctx.beginPath();
+
+        ctx.roundRect(
+            -11 * s,
+            -20 * s,
+            22 * s,
+            40 * s,
+            5 * s
+        );
+
+        ctx.fill();
+
+        ctx.fillStyle =
+            "rgba(255,255,255,.3)";
+
+        ctx.fillRect(
+            -7 * s,
+            -16 * s,
+            14 * s,
+            3 * s
+        );
+
+    }
+
+
+    /* PLÁSTICO */
+
+    if (item.type === "plastic") {
+
+        ctx.strokeStyle =
+            "rgba(230,250,255,.7)";
+
+        ctx.lineWidth =
+            5 * s;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            19 * s,
+            0,
+            TAU
+        );
+
+        ctx.stroke();
+
+        ctx.strokeStyle =
+            "rgba(255,255,255,.25)";
+
+        ctx.lineWidth =
+            2 * s;
+
+        ctx.stroke();
+
+    }
+
+
+    /* PAPEL */
+
+    if (item.type === "paper") {
+
+        ctx.fillStyle =
+            "rgba(235,235,220,.82)";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -20 * s,
+            -14 * s
+        );
+
+        ctx.lineTo(
+            20 * s,
+            -18 * s
+        );
+
+        ctx.lineTo(
+            17 * s,
+            18 * s
+        );
+
+        ctx.lineTo(
+            -18 * s,
+            13 * s
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+        ctx.strokeStyle =
+            "rgba(90,100,105,.4)";
+
+        ctx.stroke();
+
+    }
+
+
+    /* BOTELLA */
+
+    if (item.type === "bottle") {
+
+        ctx.fillStyle =
+            "rgba(190,245,255,.55)";
+
+        ctx.strokeStyle =
+            "rgba(220,255,255,.8)";
+
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        ctx.roundRect(
+            -9 * s,
+            -25 * s,
+            18 * s,
+            50 * s,
+            6 * s
+        );
+
+        ctx.fill();
+
+        ctx.stroke();
+
+        ctx.fillStyle =
+            "#3d8c9e";
+
+        ctx.fillRect(
+            -5 * s,
+            -30 * s,
+            10 * s,
+            7 * s
+        );
+
+    }
+
+
+    /* PETRÓLEO */
+
+    if (item.type === "oil") {
+
+        ctx.shadowColor =
+            "rgba(0,0,0,.7)";
+
+        ctx.shadowBlur =
+            18;
+
+        const gradient =
+            ctx.createRadialGradient(
+                0,
+                0,
+                2,
+                0,
+                0,
+                50 * s
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(12,18,21,.95)"
+        );
+
+        gradient.addColorStop(
+            .6,
+            "rgba(8,12,17,.78)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(5,8,12,.1)"
+        );
+
+        ctx.fillStyle =
+            gradient;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -50 * s,
+            0
+        );
+
+        ctx.bezierCurveTo(
+            -40 * s,
+            -30 * s,
+            -10 * s,
+            -45 * s,
+            10 * s,
+            -32 * s
+        );
+
+        ctx.bezierCurveTo(
+            45 * s,
+            -20 * s,
+            55 * s,
+            15 * s,
+            25 * s,
+            32 * s
+        );
+
+        ctx.bezierCurveTo(
+            0,
+            50 * s,
+            -40 * s,
+            35 * s,
+            -50 * s,
+            0
+        );
+
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+    }
+
+    ctx.restore();
+
+}
+
+
+/* ============================================================
+   FONDO MARINO
+============================================================ */
+
+function drawSeabed(pollution) {
+
+    const health =
+        1 - pollution;
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            H - 130,
+            0,
+            H
+        );
+
+    gradient.addColorStop(
+        0,
+        `rgba(
+            18,
+            70,
+            77,
+            ${.3 + health * .2}
+        )`
+    );
+
+    gradient.addColorStop(
+        1,
+        `rgba(
+            8,
+            20,
+            25,
+            .95
+        )`
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fillRect(
+        0,
+        H - 110,
+        W,
+        110
+    );
+
+
+    /* pequeñas rocas */
+
+    ctx.fillStyle =
+        `rgba(
+            ${50 + health * 30},
+            ${65 + health * 40},
+            ${60 + health * 20},
+            .8
+        )`;
+
+    for (let i = 0; i < 35; i++) {
+
+        const x =
+            i * (W / 35) +
+            Math.sin(i * 2.7) * 20;
+
+        const size =
+            5 + (i % 5) * 3;
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            x,
+            H - 5,
+            size * 2,
+            size,
+            0,
+            0,
+            TAU
+        );
+
+        ctx.fill();
+
+    }
+
+}
+
+
+/* ============================================================
+   EFECTOS DE INTERACCIÓN
+============================================================ */
+
+function createCleanupBurst(x, y) {
+
+    for (let i = 0; i < 18; i++) {
+
+        particles.push({
+
+            x,
+            y,
+
+            size: random(1, 4),
+
+            vx: random(-2, 2),
+            vy: random(-2, 2),
+
+            alpha: .9,
+
+            phase: random(0, TAU)
+
+        });
+
+    }
+
+}
+
+
+function createHealingBurst(x, y) {
+
+    for (let i = 0; i < 25; i++) {
+
+        particles.push({
+
+            x,
+            y,
+
+            size: random(1, 4),
+
+            vx: random(-1.8, 1.8),
+            vy: random(-1.8, 1.8),
+
+            alpha: 1,
+
+            phase: random(0, TAU)
+
+        });
+
+    }
+
+    for (let i = 0; i < 6; i++) {
+
+        createBubble(
+            x + random(-30, 30),
+            y + random(-20, 20),
+            1
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   CELEBRACIÓN FINAL
+============================================================ */
+
+function startCelebration() {
+
+    celebrationActive = true;
+
+    createConfetti();
+
+    benefitsOverlay.classList.remove(
+        "hidden"
+    );
+
+    showMessage(
+        "¡ECOSISTEMA RESTAURADO AL 100%!",
+        "#65ffca"
+    );
+
+
+    setTimeout(() => {
+
+        celebrationActive = false;
+
+    }, 12000);
+
+}
+
+
+/* ============================================================
+   CONFETI / SERPENTINAS
+============================================================ */
+
+function createConfetti() {
+
+    confettiLayer.innerHTML = "";
+
+    for (let i = 0; i < 140; i++) {
+
+        const piece =
+            document.createElement("div");
+
+        piece.className =
+            "confetti";
+
+        piece.style.left =
+            random(0, 100) + "%";
+
+        piece.style.setProperty(
+            "--x",
+            random(-250, 250) + "px"
+        );
+
+        piece.style.setProperty(
+            "--duration",
+            random(2.5, 6) + "s"
+        );
+
+        piece.style.setProperty(
+            "--hue",
+            randomInt(0, 360)
+        );
+
+        piece.style.animationDelay =
+            random(0, 2) + "s";
+
+        confettiLayer.appendChild(piece);
+
+    }
+
+    setTimeout(() => {
+
+        confettiLayer.innerHTML = "";
+
+    }, 8000);
+
+}
+</script>
+</body>
+</html>
